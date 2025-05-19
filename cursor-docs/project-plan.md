@@ -90,13 +90,13 @@ Markdown
 
 ### Phase 2: Homepage & Basic Layout (Estimated: 1 week)
 
-- [ ] Create main layout (Navbar, Footer).
-- [ ] Develop Homepage (`app/(root)/page.js`).
-  - [ ] Collaboration section (static content initially).
-  - [ ] Latest projects section (placeholder).
-  - [ ] Twitter social media integration (basic feed display).
-    - [ ] API route to fetch tweets.
-    - [ ] Component to display tweets.
+- [x] Create main layout (Navbar, Footer).
+- [x] Develop Homepage (`app/(root)/page.js`).
+  - [x] Collaboration section (static content initially).
+  - [x] Latest projects section (placeholder).
+  - [x] Personal Reddit posts integration.
+    - [x] API route to fetch posts from user account.
+    - [x] Component to display personal Reddit posts.
 
 ### Phase 3: Projects Pages & Database Integration (Estimated: 2 weeks)
 
@@ -143,9 +143,9 @@ Markdown
 
 ### Homepage
 
-- [ ] Collaboration section.
-- [ ] Latest projects showcase (dynamically pulled from D1).
-- [ ] X (Twitter) social media feed.
+- [x] Collaboration section.
+- [x] Latest projects showcase (currently using placeholder data).
+- [x] Personal Reddit posts feed.
 
 ### Projects Page (`/projects`)
 
