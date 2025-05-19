@@ -9,13 +9,21 @@
 		"lint": "next lint",
 		"deploy": "opennextjs-cloudflare build && opennextjs-cloudflare deploy",
 		"preview": "opennextjs-cloudflare build && opennextjs-cloudflare preview",
-		"cf-typegen": "wrangler types --env-interface CloudflareBindings ./cloudflare-env.d.ts"
+		"cf-typegen": "wrangler types --env-interface CloudflareBindings ./cloudflare-env.d.ts",
+		"db:generate": "drizzle-kit generate --schema=src/db/schema.js --out=src/db/migrations --dialect=sqlite",
+		"db:migrate": "wrangler d1 migrations apply srbcodes-db --local",
+		"db:migrate:prod": "wrangler d1 migrations apply srbcodes-db"
 	},
 	"dependencies": {
+		"@cloudflare/d1": "^1.4.1",
 		"@opennextjs/cloudflare": "^1.0.3",
+		"@paralleldrive/cuid2": "^2.2.2",
+		"drizzle-kit": "^0.20.13",
+		"drizzle-orm": "^0.29.3",
 		"next": "15.3.2",
 		"react": "^19.0.0",
-		"react-dom": "^19.0.0"
+		"react-dom": "^19.0.0",
+		"server-only": "^0.0.1"
 	},
 	"devDependencies": {
 		"@eslint/eslintrc": "^3",

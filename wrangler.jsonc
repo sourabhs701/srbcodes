@@ -17,45 +17,43 @@
 	},
 	"observability": {
 		"enabled": true
-	},"routes": [
+	},
+	"routes": [
 		{
 			"pattern": "srb.codes",
 			"custom_domain": true
 		}
-		
 	],
 	"placement": { "mode": "smart" },
-	/**
-	 * Smart Placement
-	 * Docs: https://developers.cloudflare.com/workers/configuration/smart-placement/#smart-placement
-	 */
+	
+	// D1 Database binding
+	"d1_databases": [
+		{
+			"binding": "DB",
+			"database_name": "srbcodes-db",
+			"database_id": "e463512d-3846-4fde-86ba-58b17e4cf7c3"
+		}
+	],
+	
+	// R2 Storage binding
+	"r2_buckets": [
+		{
+			"binding": "BUCKET",
+			"bucket_name": "srbcodes-assets",
+			"preview_bucket_name": "srbcodes-assets-dev"
+		}
+	],
 
-	/**
-	 * Bindings
-	 * Bindings allow your Worker to interact with resources on the Cloudflare Developer Platform, including
-	 * databases, object storage, AI inference, real-time communication and more.
-	 * https://developers.cloudflare.com/workers/runtime-apis/bindings/
-	 */
+	// AI binding for Cloudflare AI
+	"ai": {
+		"binding": "AI"
+	},
 
 	/**
 	 * Environment Variables
 	 * https://developers.cloudflare.com/workers/wrangler/configuration/#environment-variables
 	 */
-	// "vars": { "MY_VARIABLE": "production_value" },
-	/**
-	 * Note: Use secrets to store sensitive data.
-	 * https://developers.cloudflare.com/workers/configuration/secrets/
-	 */
-
-	/**
-	 * Static Assets
-	 * https://developers.cloudflare.com/workers/static-assets/binding/
-	 */
-	// "assets": { "directory": "./public/", "binding": "ASSETS" },
-
-	/**
-	 * Service Bindings (communicate between multiple Workers)
-	 * https://developers.cloudflare.com/workers/wrangler/configuration/#service-bindings
-	 */
-	// "services": [{ "binding": "MY_SERVICE", "service": "my-service" }]
+	"vars": {
+		"ENVIRONMENT": "production"
+	}
 }
