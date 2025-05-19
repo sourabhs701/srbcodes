@@ -1,0 +1,83 @@
+You are an expert in Javascript, Next.js (App Router), React, and Tailwind CSS.
+You are also highly proficient with Cloudflare Workers, D1 (serverless SQLite), R2 (object storage), and Cloudflare AI.
+
+You can refer to the markdown files in `./cursor-docs` (especially `project-plan.md`) to get more context about the project.
+Always update the `project-plan.md` with checkbox status or new tasks as you complete work or identify new requirements.
+
+## Cloudflare Resource Usage:
+
+- **D1 (Database):**
+  - Always use the existing D1 binding specified in `wrangler.jsonc`. Do not suggest creating new D1 databases.
+  - The D1 database schema is managed by DrizzleORM. Schema definitions are in `src/db/schema.js`.
+- **R2 (Storage):**
+  - Always use the existing R2 binding specified in `wrangler.jsonc` for storing markdown files, `assets.csv`, and potentially other project assets.
+  - Provide clear examples of how to upload to and retrieve files from R2 using the Cloudflare Workers runtime APIs or relevant libraries.
+- **KV (Key-Value Store):**
+  - If KV is used (e.g., for caching API responses), always use an existing KV namespace specified in `wrangler.jsonc`.
+- **AI (Cloudflare AI):**
+  - Always use the existing AI binding specified in `wrangler.jsonc`.
+  - Show how to use the Cloudflare AI SDK or direct API calls from a Worker for tasks like text summarization.
+- **`wrangler.jsonc`:**
+  - You may suggest additions to `wrangler.jsonc` for new bindings if absolutely necessary and not covered, but prefer using existing ones.
+  - After suggesting a new binding, remind the user to update their local and deployed `wrangler.jsonc`.
+
+## Database and Migrations (DrizzleORM with D1):
+
+- **Schema:** The DrizzleORM schema is defined in `src/db/schema.js`.
+- **Migrations:**
+  - Never generate SQL migration files directly.
+  - After making changes to `src/db/schema.js`, instruct the user to run `npm run db:generate MIGRATION_NAME` (assuming a script like `"db:generate": "drizzle-kit generate:sqlite --schema src/db/schema.js --out src/db/migrations"` in `package.json`).
+  - To apply migrations, instruct the user to run `npm run db:migrate` (assuming a script like `"db:migrate": "wrangler d1 migrations apply YOUR_DATABASE_NAME --local"` for local and a similar one for production).
+- **Querying:**
+  - Use DrizzleORM for all database interactions.
+  - **Never use Drizzle ORM Transactions**, as Cloudflare D1 has limited transaction support. Structure operations to be idempotent or handle partial failures at the application level.
+  - When inserting items with Drizzle ORM (`db.insert(schema.tableName).values(...)`), **do not pass an `id`** if the schema defines it as auto-generated (e.g., using `$defaultFn(() => cuid())`). D1 and Drizzle will handle it.
+  - For `updatedAt` fields, D1 does not automatically update them on change. This logic might need to be handled in the application code before an update, or if Drizzle/D1 supports it via schema in the future, prefer that. For now, manually set `updatedAt: new Date().toISOString()` during updates.
+
+## Code Style and Structure (JavaScript):
+
+- **Language:** All code must be **JavaScript**.
+- **Framework:** Use Next.js with the App Router.
+- **Components:**
+  - Use functional components.
+  - Employ React Server Components (RSCs) by default. Only use Client Components (`"use client"`) when essential (e.g., for event handlers, hooks like `useState`, `useEffect`, browser APIs).
+  - Keep Client Components small and push state/logic down the tree as much as possible.
+- **File Structure:**
+  - Group related files by feature or component.
+  - Example: `src/components/projects/ProjectCard.js`, `src/lib/github.js`.
+  - Exported component first, then subcomponents, helpers, static content, and finally types (if using JSDoc for type hints).
+- **Naming Conventions:**
+  - Use `lowercase-kebab-case` for directories and non-component files (e.g., `src/lib/api-helpers.js`).
+  - Use `PascalCase` for component files (e.g., `UserProfile.js`).
+  - Favor named exports for components and utilities.
+- **Variables:** Use descriptive variable names, often with auxiliary verbs for booleans (e.g., `isLoading`, `hasError`).
+- **Functions:**
+  - Use the `function` keyword for pure functions or `async function` for asynchronous ones. Arrow functions are also acceptable, especially for callbacks or concise functions.
+  - When a function has more than one parameter, consider passing them as a named object for clarity: `function fetchData({ userId, limit }) { ... }`.
+- **Server-Only Modules:** Add `import "server-only";` at the top of JavaScript modules that should only run on the server (e.g., database access utilities, server actions). This rule does **not** apply to `page.js`, `layout.js`, or `route.js` files in the `app` directory, as their server/client nature is determined by Next.js and their content.
+- **Server Actions:** If using Next.js Server Actions (e.g., for form submissions without client-side JS for the action itself):
+  - Define them in server components or separate files with `"use server";` at the top.
+  - If a library like `zsa-react` or a similar pattern for JS is adopted for server actions, follow its usage guidelines.
+- **Styling:**
+  - Use Tailwind CSS for all styling.
+  - Implement responsive design with Tailwind's variants (mobile-first approach).
+  - Ensure components are optimized for both light and dark mode if the design requires it.
+  - When a "container" class is needed for centering content, use `mx-auto` along with `w-full` and `max-w-screen-xl` (or similar max-width).
+- **Comments:** Do not delete existing relevant comments. Add new comments to clarify complex logic.
+- **JSX:** Write declarative and readable JSX. Avoid unnecessary curly braces in conditionals if a simpler syntax is possible.
+
+## Performance Optimization:
+
+- Minimize the use of `"use client"`, `useEffect`, and `useState`.
+- Wrap client components that fetch data or have a loading state in `<Suspense>` with an appropriate fallback UI.
+- Use `next/dynamic` for dynamic loading of components that are not critical for the initial view.
+- Optimize images: use appropriate formats, include size attributes if known, and implement lazy loading (Next.js `<Image>` component handles much of this if used correctly with an appropriate loader for R2 if needed).
+
+## General Guidelines:
+
+- **URL State:** For managing URL search parameter state, consider using libraries like `nuqs` if the complexity warrants it, or manage with standard Next.js router/navigation hooks.
+- **Web Vitals:** Keep LCP, CLS, FID in mind during development.
+- **Data Fetching:** Follow Next.js App Router conventions for data fetching (async Server Components, `fetch` in Route Handlers or Server Actions).
+- **Terminal Commands:** Always use `npm` for installing dependencies (e.g., `npm install some-package`, `npm run dev`).
+
+By following these guidelines, you will help maintain a consistent, performant, and modern codebase for this project.
