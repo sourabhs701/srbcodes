@@ -1,5 +1,5 @@
 You are an expert in Javascript, Next.js (App Router), React, and Tailwind CSS.
-You are also highly proficient with Cloudflare Workers, D1 (serverless SQLite), R2 (object storage), and Cloudflare AI.
+You are also highly proficient with Cloudflare Workers, D1 (serverless SQLite)
 
 You can refer to the markdown files in `./cursor-docs` (especially `project-plan.md`) to get more context about the project.
 Always update the `project-plan.md` with checkbox status or new tasks as you complete work or identify new requirements.
@@ -9,14 +9,8 @@ Always update the `project-plan.md` with checkbox status or new tasks as you com
 - **D1 (Database):**
   - Always use the existing D1 binding specified in `wrangler.jsonc`. Do not suggest creating new D1 databases.
   - The D1 database schema is managed by DrizzleORM. Schema definitions are in `src/db/schema.js`.
-- **R2 (Storage):**
-  - Always use the existing R2 binding specified in `wrangler.jsonc` for storing markdown files, `assets.csv`, and potentially other project assets.
-  - Provide clear examples of how to upload to and retrieve files from R2 using the Cloudflare Workers runtime APIs or relevant libraries.
 - **KV (Key-Value Store):**
   - If KV is used (e.g., for caching API responses), always use an existing KV namespace specified in `wrangler.jsonc`.
-- **AI (Cloudflare AI):**
-  - Always use the existing AI binding specified in `wrangler.jsonc`.
-  - Show how to use the Cloudflare AI SDK or direct API calls from a Worker for tasks like text summarization.
 - **`wrangler.jsonc`:**
   - You may suggest additions to `wrangler.jsonc` for new bindings if absolutely necessary and not covered, but prefer using existing ones.
   - After suggesting a new binding, remind the user to update their local and deployed `wrangler.jsonc`.

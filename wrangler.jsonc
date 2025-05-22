@@ -1,20 +1,15 @@
-/**
- * For more details on how to configure Wrangler, refer to:
- * https://developers.cloudflare.com/workers/wrangler/configuration/
- */
 {
-	"$schema": "node_modules/wrangler/config-schema.json",
-	"name": "srbcodes",
-	"main": ".open-next/worker.js",
-	"compatibility_date": "2025-03-01",
-	"compatibility_flags": [
-		"nodejs_compat",
-		"global_fetch_strictly_public"
-	],
-	"assets": {
-		"binding": "ASSETS",
-		"directory": ".open-next/assets"
-	},
+  "main": ".open-next/worker.js",
+  "name": "srbcodes",
+  "compatibility_date": "2025-03-25",
+  "compatibility_flags": [
+    "nodejs_compat"
+  ],
+  "assets": {
+    "directory": ".open-next/assets",
+    "binding": "ASSETS"
+  }
+,
 	"observability": {
 		"enabled": true
 	},
@@ -31,23 +26,10 @@
 		{
 			"binding": "DB",
 			"database_name": "srbcodes-db",
-			"database_id": "e463512d-3846-4fde-86ba-58b17e4cf7c3"
+			"database_id": "e463512d-3846-4fde-86ba-58b17e4cf7c3",
+			"migrations_dir": "src/db/migrations"
 		}
 	],
-	
-	// R2 Storage binding
-	"r2_buckets": [
-		{
-			"binding": "BUCKET",
-			"bucket_name": "srbcodes-assets",
-			"preview_bucket_name": "srbcodes-assets-dev"
-		}
-	],
-
-	// AI binding for Cloudflare AI
-	"ai": {
-		"binding": "AI"
-	},
 
 	/**
 	 * Environment Variables
