@@ -1,43 +1,57 @@
 {
   "version": "5",
   "dialect": "sqlite",
-  "id": "ace51601-ad41-46c9-9d50-f334d1cd745f",
-  "prevId": "00000000-0000-0000-0000-000000000000",
+  "id": "64572e04-d17d-4d47-8abe-a09d9001da03",
+  "prevId": "f7da3aff-84e3-4f8d-b3da-f4b95a213c94",
   "tables": {
-    "subscribers": {
-      "name": "subscribers",
+    "work": {
+      "name": "work",
       "columns": {
         "id": {
           "name": "id",
-          "type": "text",
+          "type": "integer",
           "primaryKey": true,
           "notNull": true,
-          "autoincrement": false
+          "autoincrement": true
         },
-        "email": {
-          "name": "email",
+        "name": {
+          "name": "name",
           "type": "text",
           "primaryKey": false,
           "notNull": true,
           "autoincrement": false
         },
-        "ip": {
-          "name": "ip",
+        "slug": {
+          "name": "slug",
           "type": "text",
           "primaryKey": false,
-          "notNull": false,
+          "notNull": true,
           "autoincrement": false
         },
-        "latitude": {
-          "name": "latitude",
-          "type": "real",
+        "pageId": {
+          "name": "pageId",
+          "type": "text",
           "primaryKey": false,
-          "notNull": false,
+          "notNull": true,
           "autoincrement": false
         },
-        "longitude": {
-          "name": "longitude",
-          "type": "real",
+        "github_url": {
+          "name": "github_url",
+          "type": "text",
+          "primaryKey": false,
+          "notNull": true,
+          "autoincrement": false
+        },
+        "tech_stack": {
+          "name": "tech_stack",
+          "type": "text",
+          "primaryKey": false,
+          "notNull": true,
+          "autoincrement": false
+        },
+        "live_url": {
+          "name": "live_url",
+          "type": "text",
           "primaryKey": false,
           "notNull": false,
           "autoincrement": false
@@ -52,10 +66,10 @@
         }
       },
       "indexes": {
-        "subscribers_email_unique": {
-          "name": "subscribers_email_unique",
+        "work_slug_unique": {
+          "name": "work_slug_unique",
           "columns": [
-            "email"
+            "slug"
           ],
           "isUnique": true
         }

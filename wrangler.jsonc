@@ -31,6 +31,18 @@
 		}
 	],
 
+	// KV namespace for API caching
+	"kv_namespaces": [
+		{
+			"binding": "API_CACHE",
+			"id": "5b82ea59dac046c9a67de0116a5943dc"
+		},
+		{
+			"binding": "SUBSCRIBERS_KV",
+			"id": "cc124890ddc249e69a6b3a902e380eaf"
+		}
+	],
+
 	/**
 	 * Environment Variables
 	 * https://developers.cloudflare.com/workers/wrangler/configuration/#environment-variables
