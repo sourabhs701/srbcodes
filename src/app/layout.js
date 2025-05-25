@@ -1,5 +1,4 @@
 import "./globals.css";
-import Header from "@/src/components/layout/Header";
 import { Toaster } from "@/src/components/ui/sonner";
 import ClickSpark from "@/src/components/ui/ClickSpark";
 export const metadata = {
@@ -28,7 +27,6 @@ export default function RootLayout({ children }) {
   return (
     <html lang="en" className="scroll-smooth">
       <body className="bg-[#fefeff] ">
-        <Header />
         <ClickSpark
           sparkColor="#000"
           sparkSize={10}
