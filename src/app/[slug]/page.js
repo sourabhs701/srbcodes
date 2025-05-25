@@ -53,7 +53,7 @@ export default function WorkDetails({ params }) {
         <div className="max-w-4xl mx-auto px-6 py-12 md:px-8 lg:px-12">
           <Link
             href="/work"
-            className="inline-flex items-center text-sm md:text-base font-medium text-blue-600 hover:text-blue-800 transition-colors mb-8"
+            className="inline-flex items-center text-sm md:text-base font-medium text-blue-600 hover:text-blue-800 transition-colors mb-8 sticky top-0 bg-white z-200"
           >
             <svg
               xmlns="http://www.w3.org/2000/svg"
@@ -69,7 +69,7 @@ export default function WorkDetails({ params }) {
             >
               <path d="M19 12H5M12 19l-7-7 7-7" />
             </svg>
-            Back to work
+            Back
           </Link>
 
           <div className="animate-pulse space-y-6">
@@ -92,7 +92,7 @@ export default function WorkDetails({ params }) {
         <div className="max-w-4xl mx-auto px-6 py-12 md:px-8 lg:px-12">
           <Link
             href="/work"
-            className="inline-flex items-center text-sm md:text-base font-medium text-blue-600 hover:text-blue-800 transition-colors mb-8"
+            className="inline-flex items-center text-sm md:text-base font-medium text-blue-600 hover:text-blue-800 transition-colors mb-8 sticky top-0 bg-white z-200"
           >
             <svg
               xmlns="http://www.w3.org/2000/svg"
@@ -108,7 +108,7 @@ export default function WorkDetails({ params }) {
             >
               <path d="M19 12H5M12 19l-7-7 7-7" />
             </svg>
-            Back to work
+            Back
           </Link>
 
           <div className="text-center">
