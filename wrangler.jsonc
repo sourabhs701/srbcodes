@@ -2,52 +2,37 @@
   "main": ".open-next/worker.js",
   "name": "srbcodes",
   "compatibility_date": "2025-03-25",
-  "compatibility_flags": [
-    "nodejs_compat"
-  ],
+  "compatibility_flags": ["nodejs_compat"],
   "assets": {
     "directory": ".open-next/assets",
     "binding": "ASSETS"
+  },
+  "observability": {
+    "enabled": true
+  },
+  "routes": [
+    {
+      "pattern": "srb.codes",
+      "custom_domain": true
+    }
+  ],
+  "placement": { "mode": "smart" },
+
+  // KV namespace for all data storage and caching
+  "kv_namespaces": [
+    {
+      "binding": "KV",
+      "id": "5b82ea59dac046c9a67de0116a5943dc",
+      "preview_id": "5b82ea59dac046c9a67de0116a5943dc"
+    }
+  ],
+
+  /**
+   * Environment Variables
+   * https://developers.cloudflare.com/workers/wrangler/configuration/#environment-variables
+   */
+  "vars": {
+    "ENVIRONMENT": "production",
+    "ADMIN_TOKEN": "everysecretstring"
   }
-,
-	"observability": {
-		"enabled": true
-	},
-	"routes": [
-		{
-			"pattern": "srb.codes",
-			"custom_domain": true
-		}
-	],
-	"placement": { "mode": "smart" },
-	
-	// D1 Database binding
-	"d1_databases": [
-		{
-			"binding": "DB",
-			"database_name": "srbcodes-db",
-			"database_id": "e463512d-3846-4fde-86ba-58b17e4cf7c3",
-			"migrations_dir": "src/db/migrations"
-		}
-	],
-
-	// KV namespace for API caching
-	"kv_namespaces": [
-		{
-			"binding": "API_CACHE",
-			"id": "5b82ea59dac046c9a67de0116a5943dc"
-		},
-		{
-			"binding": "SUBSCRIBERS_KV",
-			"id": "cc124890ddc249e69a6b3a902e380eaf"
-		}
-	],
-
-	/**
-	 * Environment Variables
-	 * https://developers.cloudflare.com/workers/wrangler/configuration/#environment-variables
-	 */
-	"vars": {
-		"ENVIRONMENT": "production"
-	}
 }

@@ -10,7 +10,7 @@ export default function Header() {
       </div>
       <div className='font-inter text-sm flex space-x-6 items-center'>
         <Link href={'/work'} className='blue-dot hover:text-blue-600 transition-colors font-medium'>Work</Link>
-        <Link href={'/me'} className='hover:text-blue-600 transition-colors font-medium'>About</Link>
+        <Link href={'/me'} className='hover:text-blue-600 transition-colors font-medium'>me?</Link>
       </div>
     </nav>
   )

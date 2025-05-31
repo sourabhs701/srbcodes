@@ -1,1 +1,0 @@
-ALTER TABLE `work` RENAME COLUMN `notion_url` TO `pageId`;

@@ -1,21 +1,37 @@
 "use client";
 import { Separator } from "@/src/components/ui/separator";
 import Link from "next/link";
-import useSWR from "swr";
-
-// Fetcher function for SWR
-const fetcher = (url) => fetch(url).then((res) => res.json());
+import { useState, useEffect } from "react";
 
 export default function Work() {
-  // Use SWR for data fetching with caching
-  const { data, error, isLoading } = useSWR("/api/work", fetcher, {
-    revalidateOnFocus: false,
-    revalidateIfStale: false,
-    revalidateOnReconnect: false,
-    dedupingInterval: 300000, // 5 minutes
-  });
+  const [works, setWorks] = useState([]);
+  const [isLoading, setIsLoading] = useState(true);
+  const [error, setError] = useState(null);
 
-  const works = data?.data || [];
+  // Fetch data on component mount
+  useEffect(() => {
+    async function fetchWorks() {
+      try {
+        setIsLoading(true);
+        const response = await fetch("/api/work");
+
+        if (!response.ok) {
+          throw new Error("Failed to fetch work items");
+        }
+
+        const data = await response.json();
+        setWorks(data.data || []);
+        setError(null);
+      } catch (err) {
+        console.error("Error fetching work items:", err);
+        setError(err.message);
+      } finally {
+        setIsLoading(false);
+      }
+    }
+
+    fetchWorks();
+  }, []);
 
   return (
     <div className="min-h-screen bg-white text-black">
@@ -47,15 +63,15 @@ export default function Work() {
                   className="border-b pb-4 border-gray-100 last:border-b-0"
                 >
                   <Link
-                    href={`/${work.slug}`}
+                    href={`/work/${work.slug}`}
                     prefetch={true}
                     className="block group"
                   >
                     <h2 className="text-xl md:text-2xl font-medium hover:text-blue-600 transition-colors">
-                      {work.slug}
+                      {work.name || work.slug}
                     </h2>
                     {work.description && (
-                      <p className="text-gray-600 mt-2 text-base md:text-lg">
+                      <p className="text-gray-600 mt-2 text-base">
                         {work.description}
                       </p>
                     )}

@@ -1,36 +1,47 @@
-import notion from "@/src/lib/notion";
-import {
-  getCachedData,
-  setCachedData,
-  createCachedResponse,
-} from "@/src/lib/cache";
-
-// Cache TTL in seconds (12 hours)
-const CACHE_TTL = 43200;
+import "server-only";
+import { getNotionPageData } from "@/src/lib/notion";
+import { getNotionPageFromKV, saveNotionPageToKV } from "@/src/lib/kv";
 
 export async function GET(request, { params }) {
-  const { pageId } = await params;
-  const CACHE_KEY = `notion_page_${pageId}`;
+  const { pageId } = params;
 
   try {
-    // Try to get data from cache first
-    const cachedData = await getCachedData(CACHE_KEY);
+    // Try to get data from KV first
+    const cachedData = await getNotionPageFromKV(pageId);
     if (cachedData) {
-      return createCachedResponse({ data: cachedData }, CACHE_TTL);
+      return new Response(JSON.stringify({ data: cachedData }), {
+        headers: { "Content-Type": "application/json" },
+      });
     }
 
-    // If not in cache, get from Notion API
-    const recordMap = await notion.getPage(pageId);
+    // If not in KV, get from Notion API
+    const recordMap = await getNotionPageData(pageId);
 
-    // Store in cache for future requests
-    await setCachedData(CACHE_KEY, recordMap, { expirationTtl: CACHE_TTL });
+    if (!recordMap) {
+      return new Response(
+        JSON.stringify({ error: "Failed to fetch Notion page" }),
+        {
+          status: 500,
+          headers: { "Content-Type": "application/json" },
+        }
+      );
+    }
 
-    // Return with cache headers
-    return createCachedResponse({ data: recordMap }, CACHE_TTL);
+    // Store in KV for future requests
+    await saveNotionPageToKV(pageId, recordMap);
+
+    // Return the data
+    return new Response(JSON.stringify({ data: recordMap }), {
+      headers: { "Content-Type": "application/json" },
+    });
   } catch (error) {
     console.error(`Error fetching Notion page (${pageId}):`, error);
-    return createCachedResponse({ error: "Failed to fetch Notion page" }, 0, {
-      status: 500,
-    });
+    return new Response(
+      JSON.stringify({ error: "Failed to fetch Notion page" }),
+      {
+        status: 500,
+        headers: { "Content-Type": "application/json" },
+      }
+    );
   }
 }
