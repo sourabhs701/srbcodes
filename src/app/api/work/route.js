@@ -5,7 +5,6 @@ export async function GET() {
   try {
     // Get work data from KV storage
     const works = await getWorksFromKV();
-    console.log("works", works);
 
     // Return the data
     return new Response(JSON.stringify({ data: works }), {

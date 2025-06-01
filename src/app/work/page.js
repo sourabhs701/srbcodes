@@ -70,11 +70,6 @@ export default function Work() {
                     <h2 className="text-xl md:text-2xl font-medium hover:text-blue-600 transition-colors">
                       {work.name || work.slug}
                     </h2>
-                    {work.description && (
-                      <p className="text-gray-600 mt-2 text-base">
-                        {work.description}
-                      </p>
-                    )}
                   </Link>
                 </li>
               ))}

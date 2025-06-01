@@ -11,7 +11,7 @@ export function SocialSection() {
               href="https://x.com/sourabhdotsol"
               target="_blank"
               rel="noopener noreferrer"
-              className="text-blue-500 hover:text-blue-600 underline"
+              className="text-blue-500 hover:text-blue-600 font-bold"
             >
               X
             </a>{" "}
