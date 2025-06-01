@@ -41,6 +41,16 @@ export async function saveSubscriberToKV(email, ipAddress) {
 }
 
 /**
+ * Get all subscribers from KV
+ * @returns {Promise<Array>} Array of subscriber objects
+ */
+export async function getSubscribersKV() {
+  const kv = getKV();
+  const subscribers = await kv.get("subscribers", { type: "json" });
+  return subscribers || [];
+}
+
+/**
  * Get all works from KV
  * @returns {Promise<Array>} Array of work items
  */
