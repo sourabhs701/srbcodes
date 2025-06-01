@@ -34,12 +34,11 @@ export async function POST(request) {
       ipAddress = ipAddress.split(",")[0].trim();
     }
 
-    // Get KV namespace
-    const kv = getSubscribersKV();
+    // Check if email already exists
+    const subscribers = await getSubscribersKV();
+    const isAlreadySubscribed = subscribers.some((sub) => sub.email === email);
 
-    // Check if email already exists in KV
-    const existingSubscriber = await kv.get(email);
-    if (existingSubscriber) {
+    if (isAlreadySubscribed) {
       return NextResponse.json(
         { error: "This email is already subscribed" },
         { status: 409 }

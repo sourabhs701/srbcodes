@@ -1,6 +1,7 @@
 import "./globals.css";
 import { Toaster } from "@/src/components/ui/sonner";
 import ClickSpark from "@/src/components/ui/ClickSpark";
+
 export const metadata = {
   title: "SRB CODES - Creator",
   description:
@@ -35,7 +36,7 @@ export default function RootLayout({ children }) {
           duration={400}
         >
           <main className="flex-grow">{children}</main>
-          <Toaster />
+          <Toaster position="top-center"  />
         </ClickSpark>
       </body>
     </html>

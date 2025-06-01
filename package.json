@@ -5,15 +5,9 @@
 	"scripts": {
 		"dev": "next dev --turbopack",
 		"dev:newrelic": "node -r newrelic node_modules/.bin/next dev --turbopack",
-		"dev:wrangler": "wrangler dev",
 		"build": "next build",
-		"build:cf": "next build && open-next build",
-		"preview": "opennextjs-cloudflare build && opennextjs-cloudflare preview",
 		"deploy": "opennextjs-cloudflare build && opennextjs-cloudflare deploy",
-		"cf-typegen": "wrangler types --env-interface CloudflareEnv cloudflare-env.d.ts",
-		"db:generate": "drizzle-kit generate:sqlite --schema=src/db/schema.js --out=src/db/migrations",
-		"db:migrate": "wrangler d1 migrations apply srbcodes-db --local",
-		"db:migrate:prod": "wrangler d1 migrations apply srbcodes-db --remote"
+		"deploy:nr": "NODE_OPTIONS='-r newrelic' opennextjs-cloudflare build && opennextjs-cloudflare deploy"
 	},
 	"dependencies": {
 		"@cloudflare/d1": "^1.4.1",

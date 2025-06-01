@@ -22,17 +22,7 @@
   "kv_namespaces": [
     {
       "binding": "KV",
-      "id": "5b82ea59dac046c9a67de0116a5943dc",
-      "preview_id": "5b82ea59dac046c9a67de0116a5943dc"
+      "id": "5b82ea59dac046c9a67de0116a5943dc"
     }
-  ],
-
-  /**
-   * Environment Variables
-   * https://developers.cloudflare.com/workers/wrangler/configuration/#environment-variables
-   */
-  "vars": {
-    "ENVIRONMENT": "production",
-    "ADMIN_TOKEN": "everysecretstring"
-  }
+  ]
 }
