@@ -1,9 +1,9 @@
-import Header from "@/src/components/layout/Header";
+import { Header } from "@/src/components/layout/Header";
 
 export default function RootLayout({ children }) {
   return (
     <>
-      <Header />
+      <Header className="flex justify-center items-center" />
 
       <main className="flex-grow">{children}</main>
     </>
