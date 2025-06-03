@@ -4,11 +4,6 @@ import { HeroSection } from "@/src/components/home/HeroSection";
 import { SocialSection } from "@/src/components/home/SocialSection";
 import { ContactSection } from "@/src/components/home/ContactSection";
 
-export const metadata = {
-  title: "SRB CODES | Home",
-  description: "Personal portfolio and project showcase of Sourabh S.",
-};
-
 function RightSide() {
   return (
     <div>

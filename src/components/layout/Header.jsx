@@ -15,7 +15,12 @@ export function Header({ className }) {
           <Link href="/me" className="text-sm font-inter hover:text-blue-500 transition-colors">
             me?
           </Link>
-          <a href="https://github.com/sourabhs701" className="hover:text-blue-500 transition-colors">
+          <a
+            href="https://github.com/sourabhs701"
+            target="_blank"
+            rel="noopener noreferrer"
+            className="hover:text-blue-500 transition-colors"
+          >
             <Icons.gitHub className="size-5" />
           </a>
         </div>

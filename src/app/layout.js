@@ -36,7 +36,7 @@ export default function RootLayout({ children }) {
           duration={400}
         >
           <main className="flex-grow">{children}</main>
-          <Toaster position="top-center"  />
+          <Toaster position="top-center" />
         </ClickSpark>
       </body>
     </html>
