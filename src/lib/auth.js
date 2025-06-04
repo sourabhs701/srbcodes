@@ -16,8 +16,8 @@ export function getAdminToken() {
  * @returns {boolean} Whether the token is valid
  */
 export function verifyToken(token) {
-  // const adminToken = getAdminToken();
-  return token === "adminToken";
+  const adminToken = getAdminToken();
+  return token === adminToken;
 }
 
 /**
