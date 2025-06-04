@@ -26,7 +26,7 @@ export default async function WorkDetails({ params }) {
     }
 
     return (
-      <div className="min-h-screen bg-white text-black">
+      <div className="min-h-screen bg-black text-white">
         <div className="max-w-4xl mx-auto px-6 py-12 md:px-8 lg:px-12">
           <div className="text-center mb-10">
             {/* <h1 className="text-4xl md:text-5xl lg:text-6xl font-bold font-inter mb-6 text-black">

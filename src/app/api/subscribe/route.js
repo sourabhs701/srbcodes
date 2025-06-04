@@ -1,6 +1,5 @@
 import "server-only";
-import { NextResponse } from "next/server";
-import { saveSubscriberToKV, getSubscribersKV } from "@/src/lib/kv";
+import { saveSubscriberToKV } from "@/src/lib/kv";
 
 // Export the config for the API route
 export const config = {
@@ -12,56 +11,53 @@ export const config = {
  */
 export async function POST(request) {
   try {
-    // Parse request body
-    const body = await request.json();
-    const { email } = body;
+    // Get the request data
+    const requestData = await request.json();
+    const { email } = requestData;
 
-    if (!email || !/^[^\s@]+@[^\s@]+\.[^\s@]+$/.test(email)) {
-      return NextResponse.json(
-        { error: "Please provide a valid email address" },
-        { status: 400 }
+    // Basic validation
+    if (!email || !/^\S+@\S+\.\S+$/.test(email)) {
+      return new Response(
+        JSON.stringify({
+          success: false,
+          error: "Valid email is required",
+        }),
+        {
+          status: 400,
+          headers: { "Content-Type": "application/json" },
+        }
       );
     }
 
-    // Extract IP address from Cloudflare context
-    let ipAddress =
-      request.headers.get("cf-connecting-ip") ||
-      request.headers.get("x-forwarded-for") ||
-      "unknown";
-
-    // Handle comma-separated list of IPs (take the first one)
-    if (ipAddress.includes(",")) {
-      ipAddress = ipAddress.split(",")[0].trim();
-    }
-
-    // Check if email already exists
-    const subscribers = await getSubscribersKV();
-    const isAlreadySubscribed = subscribers.some((sub) => sub.email === email);
-
-    if (isAlreadySubscribed) {
-      return NextResponse.json(
-        { error: "This email is already subscribed" },
-        { status: 409 }
-      );
-    }
+    // Get IP address from CF request
+    const forwardedFor = request.headers.get("x-forwarded-for");
+    const ipAddress = forwardedFor
+      ? forwardedFor.split(",")[0].trim()
+      : "unknown";
 
     // Save subscriber to KV
-    try {
-      await saveSubscriberToKV(email, ipAddress);
+    await saveSubscriberToKV(email, ipAddress);
 
-      return NextResponse.json({
+    return new Response(
+      JSON.stringify({
         success: true,
-        message: "Successfully subscribed",
-      });
-    } catch (kvError) {
-      console.error("Error saving subscriber to KV:", kvError);
-      throw kvError;
-    }
+        message: "Subscription successful",
+      }),
+      {
+        headers: { "Content-Type": "application/json" },
+      }
+    );
   } catch (error) {
-    console.error("Subscribe API error:", error);
-    return NextResponse.json(
-      { error: "Failed to subscribe. Please try again later." },
-      { status: 500 }
+    console.error("Error in subscribe API:", error);
+    return new Response(
+      JSON.stringify({
+        success: false,
+        error: "Subscription failed. Please try again later.",
+      }),
+      {
+        status: 500,
+        headers: { "Content-Type": "application/json" },
+      }
     );
   }
 }

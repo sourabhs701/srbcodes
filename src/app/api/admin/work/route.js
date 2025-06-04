@@ -64,11 +64,11 @@ export async function POST(request) {
     const workData = await request.json();
 
     // Validate required fields
-    if (!workData.slug || !workData.pageId) {
+    if (!workData.slug || !workData.title) {
       return new Response(
         JSON.stringify({
           success: false,
-          error: "Slug and pageId are required",
+          error: "Slug and title are required",
         }),
         {
           status: 400,
@@ -77,10 +77,14 @@ export async function POST(request) {
       );
     }
 
-    // Save only slug and pageId to KV
+    // Save work data to KV with all fields
     await saveWorkToKV({
       slug: workData.slug,
-      pageId: workData.pageId,
+      title: workData.title,
+      description: workData.description || "",
+      image: workData.image || "",
+      year: workData.year || "",
+      pageId: workData.pageId || "",
       updatedAt: new Date().toISOString(),
     });
 

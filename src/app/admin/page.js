@@ -39,17 +39,19 @@ export default function AdminLogin() {
   };
 
   return (
-    <div className="min-h-screen flex items-center justify-center bg-gray-50">
-      <div className="w-full max-w-md p-8 space-y-8 bg-white rounded-lg shadow">
+    <div className="min-h-screen flex items-center justify-center bg-gray-900">
+      <div className="w-full max-w-md p-8 space-y-8 bg-gray-800 border border-gray-700 rounded-lg shadow-lg">
         <div>
-          <h1 className="text-2xl font-bold text-center">Admin Login</h1>
-          <p className="mt-2 text-center text-gray-600">
+          <h1 className="text-2xl font-bold text-center text-white">
+            Admin Login
+          </h1>
+          <p className="mt-2 text-center text-gray-400">
             Sign in to access the admin dashboard
           </p>
         </div>
 
         {error && (
-          <div className="p-3 bg-red-50 text-red-700 rounded border border-red-200">
+          <div className="p-3 bg-red-900/30 text-red-200 rounded border border-red-700">
             {error}
           </div>
         )}
@@ -58,7 +60,7 @@ export default function AdminLogin() {
           <div>
             <label
               htmlFor="token"
-              className="block text-sm font-medium text-gray-700"
+              className="block text-sm font-medium text-gray-300"
             >
               Admin Token
             </label>
@@ -69,7 +71,7 @@ export default function AdminLogin() {
               required
               value={token}
               onChange={(e) => setToken(e.target.value)}
-              className="mt-1 block w-full px-3 py-2 border border-gray-300 rounded-md shadow-sm focus:outline-none focus:ring-blue-500 focus:border-blue-500"
+              className="mt-1 block w-full px-3 py-2 bg-gray-700 border border-gray-600 rounded-md shadow-sm focus:outline-none focus:ring-blue-500 focus:border-blue-500 text-white"
               placeholder="Enter the admin token"
             />
           </div>

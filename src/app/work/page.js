@@ -1,60 +1,92 @@
 "use client";
 import Footer from "@/src/components/layout/Footer";
+import Loader from "@/src/components/layout/Loader";
 import CustomCursor from "@/src/components/ui/CustomCursor";
 import { motion, useMotionValue, useSpring, useTransform } from "framer-motion";
-import { useRef, useState } from "react";
+import { useRouter } from "next/navigation";
+import { useRef, useState, useEffect } from "react";
 
 const Page = () => {
   const [showCustomCursor, setShowCustomCursor] = useState(false);
+  const [workItems, setWorkItems] = useState([]);
+  const [loading, setLoading] = useState(true);
+  const [error, setError] = useState(null);
+  const [pageLoading, setPageLoading] = useState(false);
+  const router = useRouter();
+
+  useEffect(() => {
+    const fetchWorkItems = async () => {
+      try {
+        const res = await fetch("/api/work");
+        if (!res.ok) throw new Error("Failed to fetch work items");
+        const data = await res.json();
+        setWorkItems(data.data);
+      } catch (err) {
+        setError(err.message || "Unknown error");
+      } finally {
+        setLoading(false);
+      }
+    };
+
+    fetchWorkItems();
+  }, []);
+
+  const handleNavigation = (href) => {
+    setPageLoading(true);
+    router.push(href);
+  };
 
   return (
     <>
+      {pageLoading && <Loader />}
       <CustomCursor isVisible={showCustomCursor} />
       <div className="h-[200px] bg-black"></div>
       <div className="mx-16 mb-16">
-        <h1 className="text-4xl font-light  py-6">Projects</h1>
+        <h1 className="text-4xl font-light py-6">Projects</h1>
 
-        <div className="flex flex-col">
-          <Link
-            heading="Makethumb"
-            subheading="Thumbnail generator"
-            imgSrc="/works/setup.jpg"
-            href="#"
-            setShowCustomCursor={setShowCustomCursor}
-          />
-          <Link
-            heading="Droply"
-            subheading="cloud storage"
-            imgSrc="/works/rose.jpg"
-            href="#"
-            setShowCustomCursor={setShowCustomCursor}
-          />
-
-          <Link
-            heading="Kairo Chat"
-            subheading="Public chat rooms"
-            imgSrc="/works/setup.jpg"
-            href="#"
-            setShowCustomCursor={setShowCustomCursor}
-          />
-          <Link
-            heading="TradeNFT"
-            subheading="NFT marketplace"
-            imgSrc="/works/setup.jpg"
-            href="#"
-            setShowCustomCursor={setShowCustomCursor}
-          />
-        </div>
+        {loading ? (
+          <div className="py-8 text-center">
+            <p className="text-lg text-gray-500">Loading projects...</p>
+          </div>
+        ) : error ? (
+          <div className="py-8 text-center">
+            <p className="text-lg text-red-500">Error: {error}</p>
+          </div>
+        ) : workItems.length === 0 ? (
+          <div className="py-8 text-center">
+            <p className="text-lg text-gray-500">No projects found</p>
+          </div>
+        ) : (
+          <div className="flex flex-col">
+            {workItems.map((item) => (
+              <Link
+                key={item.slug}
+                heading={item.title || item.slug}
+                subheading={item.description || ""}
+                imgSrc={item.image || "https://via.placeholder.com/400x300"}
+                href={`/work/${item.slug}`}
+                setShowCustomCursor={setShowCustomCursor}
+                onClick={() => handleNavigation(`/work/${item.slug}`)}
+              />
+            ))}
+          </div>
+        )}
       </div>
       <div className="pt-16">
-
         <Footer />
       </div>
     </>
   );
 };
 
-const Link = ({ heading, imgSrc, subheading, href, setShowCustomCursor }) => {
+const Link = ({
+  heading,
+  imgSrc,
+  subheading,
+  href,
+  setShowCustomCursor,
+  onClick,
+}) => {
   const ref = useRef(null);
 
   const x = useMotionValue(0);
@@ -82,10 +114,16 @@ const Link = ({ heading, imgSrc, subheading, href, setShowCustomCursor }) => {
     y.set(yPct);
   };
 
+  const handleClick = (e) => {
+    e.preventDefault();
+    if (onClick) onClick();
+  };
+
   return (
     <motion.a
       href={href}
       ref={ref}
+      onClick={handleClick}
       onMouseMove={handleMouseMove}
       initial="initial"
       whileHover="whileHover"
@@ -149,7 +187,7 @@ const Link = ({ heading, imgSrc, subheading, href, setShowCustomCursor }) => {
         transition={{ type: "spring" }}
         src={imgSrc}
         className="absolute z-0 h-24 w-32 rounded-lg object-cover md:h-48 md:w-64"
-        alt={`Image representing a link for ${heading}`}
+        alt={`Image for ${heading}`}
       />
     </motion.a>
   );

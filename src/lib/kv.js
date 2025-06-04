@@ -51,6 +51,29 @@ export async function getSubscribersKV() {
 }
 
 /**
+ * Delete a subscriber from KV
+ * @param {string} email - The subscriber's email address
+ * @returns {Promise<boolean>} Whether the subscriber was deleted
+ */
+export async function deleteSubscriberFromKV(email) {
+  const kv = getKV();
+  const subscribers = await getSubscribersKV();
+
+  // Find subscriber by email
+  const initialLength = subscribers.length;
+  const updatedSubscribers = subscribers.filter((sub) => sub.email !== email);
+
+  // If no subscriber was found, return false
+  if (updatedSubscribers.length === initialLength) {
+    return false;
+  }
+
+  // Save updated list
+  await kv.put("subscribers", JSON.stringify(updatedSubscribers));
+  return true;
+}
+
+/**
  * Get all works from KV
  * @returns {Promise<Array>} Array of work items
  */
@@ -82,7 +105,7 @@ export async function saveWorksToKV(works) {
 
 /**
  * Save a single work to KV
- * @param {Object} work - Work object with slug and pageId
+ * @param {Object} work - Work object with slug, title, description, image, year, pageId
  * @returns {Promise<void>}
  */
 export async function saveWorkToKV(work) {
@@ -91,18 +114,26 @@ export async function saveWorkToKV(work) {
   // Find and update existing work or add new one
   const existingIndex = works.findIndex((w) => w.slug === work.slug);
   if (existingIndex >= 0) {
-    // Only update slug and pageId, preserve createdAt
+    // Update work with new data, preserve createdAt
     works[existingIndex] = {
       slug: work.slug,
-      pageId: work.pageId,
+      title: work.title || works[existingIndex].title || "",
+      description: work.description || works[existingIndex].description || "",
+      image: work.image || works[existingIndex].image || "",
+      year: work.year || works[existingIndex].year || "",
+      pageId: work.pageId || works[existingIndex].pageId || "",
       createdAt: works[existingIndex].createdAt,
       updatedAt: new Date().toISOString(),
     };
   } else {
-    // Only store the essential fields
+    // Add new work with all fields
     works.push({
       slug: work.slug,
-      pageId: work.pageId,
+      title: work.title || "",
+      description: work.description || "",
+      image: work.image || "",
+      year: work.year || "",
+      pageId: work.pageId || "",
       createdAt: new Date().toISOString(),
       updatedAt: new Date().toISOString(),
     });

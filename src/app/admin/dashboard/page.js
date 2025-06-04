@@ -5,12 +5,18 @@ import { useRouter } from "next/navigation";
 import Link from "next/link";
 
 export default function AdminDashboard() {
+  const [activeTab, setActiveTab] = useState("works"); // "works" or "subscribers"
   const [works, setWorks] = useState([]);
+  const [subscribers, setSubscribers] = useState([]);
   const [isLoading, setIsLoading] = useState(true);
   const [error, setError] = useState("");
   const [showForm, setShowForm] = useState(false);
   const [formData, setFormData] = useState({
     slug: "",
+    title: "",
+    description: "",
+    image: "",
+    year: "",
     pageId: "",
   });
   const [editing, setEditing] = useState(false);
@@ -20,8 +26,12 @@ export default function AdminDashboard() {
 
   // Fetch work items on load
   useEffect(() => {
-    fetchWorks();
-  }, []);
+    if (activeTab === "works") {
+      fetchWorks();
+    } else if (activeTab === "subscribers") {
+      fetchSubscribers();
+    }
+  }, [activeTab]);
 
   // Fetch work items
   const fetchWorks = async () => {
@@ -54,6 +64,37 @@ export default function AdminDashboard() {
     }
   };
 
+  // Fetch subscribers
+  const fetchSubscribers = async () => {
+    setIsLoading(true);
+    setError("");
+
+    try {
+      const response = await fetch("/api/admin/subscribers", {
+        credentials: "include",
+      });
+
+      // Redirect to login if unauthorized
+      if (response.status === 401) {
+        router.push("/admin");
+        return;
+      }
+
+      const data = await response.json();
+
+      if (data.success) {
+        setSubscribers(data.data || []);
+      } else {
+        setError(data.error || "Failed to fetch subscribers");
+      }
+    } catch (err) {
+      setError("An error occurred. Please try again.");
+      console.error(err);
+    } finally {
+      setIsLoading(false);
+    }
+  };
+
   // Handle form input changes
   const handleInputChange = (e) => {
     const { name, value } = e.target;
@@ -67,8 +108,8 @@ export default function AdminDashboard() {
     setSuccessMessage("");
 
     // Validate required fields
-    if (!formData.slug || !formData.pageId) {
-      setError("Slug and Page ID are required fields");
+    if (!formData.slug || !formData.title) {
+      setError("Slug and Title are required fields");
       return;
     }
 
@@ -98,6 +139,10 @@ export default function AdminDashboard() {
         );
         setFormData({
           slug: "",
+          title: "",
+          description: "",
+          image: "",
+          year: "",
           pageId: "",
         });
         setShowForm(false);
@@ -116,6 +161,10 @@ export default function AdminDashboard() {
   const handleEdit = (work) => {
     setFormData({
       slug: work.slug || "",
+      title: work.title || "",
+      description: work.description || "",
+      image: work.image || "",
+      year: work.year || "",
       pageId: work.pageId || "",
     });
     setEditing(true);
@@ -126,7 +175,7 @@ export default function AdminDashboard() {
 
   // Handle delete button click
   const handleDelete = async (slug) => {
-    if (!confirm(`Are you sure you want to delete "${slug}"?`)) {
+    if (!confirm(`Are you sure you want to delete ${slug}?`)) {
       return;
     }
 
@@ -184,196 +233,430 @@ export default function AdminDashboard() {
     }
   };
 
+  // Handle delete subscriber
+  const handleDeleteSubscriber = async (email) => {
+    if (!confirm(`Are you sure you want to delete subscriber ${email}?`)) {
+      return;
+    }
+
+    setError("");
+    setSuccessMessage("");
+
+    try {
+      const response = await fetch(
+        `/api/admin/subscribers?email=${encodeURIComponent(email)}`,
+        {
+          method: "DELETE",
+          credentials: "include",
+        }
+      );
+
+      if (response.status === 401) {
+        router.push("/admin");
+        return;
+      }
+
+      const data = await response.json();
+
+      if (data.success) {
+        setSuccessMessage("Subscriber deleted successfully!");
+        fetchSubscribers(); // Refresh the list
+      } else {
+        setError(data.error || "Failed to delete subscriber");
+      }
+    } catch (err) {
+      setError("An error occurred. Please try again.");
+      console.error(err);
+    }
+  };
+
   return (
-    <div className="min-h-screen bg-gray-50 p-6">
+    <div className="min-h-screen bg-gray-900 text-gray-100 p-6">
       <div className="max-w-6xl mx-auto">
-        <h1 className="text-3xl font-bold mb-6">Admin Dashboard</h1>
+        <h1 className="text-3xl font-bold mb-6 text-white">Admin Dashboard</h1>
+
+        {/* Tabs */}
+        <div className="flex mb-6 border-b border-gray-700">
+          <button
+            onClick={() => setActiveTab("works")}
+            className={`px-4 py-2 font-medium text-sm ${
+              activeTab === "works"
+                ? "border-b-2 border-blue-500 text-blue-400"
+                : "text-gray-400 hover:text-gray-200"
+            }`}
+          >
+            Works
+          </button>
+          <button
+            onClick={() => setActiveTab("subscribers")}
+            className={`px-4 py-2 font-medium text-sm ${
+              activeTab === "subscribers"
+                ? "border-b-2 border-blue-500 text-blue-400"
+                : "text-gray-400 hover:text-gray-200"
+            }`}
+          >
+            Subscribers
+          </button>
+        </div>
 
         {/* Messages */}
         {error && (
-          <div className="p-4 mb-6 bg-red-50 text-red-700 rounded border border-red-200">
+          <div className="p-4 mb-6 bg-red-900/30 text-red-200 rounded border border-red-700">
             {error}
           </div>
         )}
 
         {successMessage && (
-          <div className="p-4 mb-6 bg-green-50 text-green-700 rounded border border-green-200">
+          <div className="p-4 mb-6 bg-green-900/30 text-green-200 rounded border border-green-700">
             {successMessage}
           </div>
         )}
 
-        {/* Action Buttons */}
-        <div className="mb-6 flex flex-wrap gap-4">
-          <button
-            onClick={() => {
-              setFormData({
-                slug: "",
-                pageId: "",
-              });
-              setEditing(false);
-              setShowForm(!showForm);
-              setError("");
-              setSuccessMessage("");
-            }}
-            className="px-4 py-2 bg-blue-600 text-white rounded hover:bg-blue-700 transition-colors"
-          >
-            {showForm ? "Cancel" : "Add New Work"}
-          </button>
+        {/* Works Tab Content */}
+        {activeTab === "works" && (
+          <>
+            {/* Action Buttons */}
+            <div className="mb-6 flex flex-wrap gap-4">
+              <button
+                onClick={() => {
+                  setFormData({
+                    slug: "",
+                    title: "",
+                    description: "",
+                    image: "",
+                    year: "",
+                    pageId: "",
+                  });
+                  setEditing(false);
+                  setShowForm(!showForm);
+                  setError("");
+                  setSuccessMessage("");
+                }}
+                className="px-4 py-2 bg-blue-600 text-white rounded hover:bg-blue-700 transition-colors"
+              >
+                {showForm ? "Cancel" : "Add New Work"}
+              </button>
 
-          <button
-            onClick={fetchWorks}
-            className="px-4 py-2 bg-gray-600 text-white rounded hover:bg-gray-700 transition-colors"
-          >
-            Refresh List
-          </button>
+              <button
+                onClick={fetchWorks}
+                className="px-4 py-2 bg-gray-700 text-white rounded hover:bg-gray-600 transition-colors"
+              >
+                Refresh List
+              </button>
 
-          <Link
-            href="/admin/dashboard/refresh"
-            className="px-4 py-2 bg-green-600 text-white rounded hover:bg-green-700 transition-colors"
-          >
-            Refresh All Notion Pages
-          </Link>
-        </div>
+              <Link
+                href="/admin/dashboard/refresh"
+                className="px-4 py-2 bg-green-700 text-white rounded hover:bg-green-600 transition-colors"
+              >
+                Refresh All Notion Pages
+              </Link>
+            </div>
 
-        {/* Add/Edit Form */}
-        {showForm && (
-          <div className="mb-8 p-6 bg-white rounded-lg shadow">
-            <h2 className="text-xl font-semibold mb-4">
-              {editing ? "Edit Work Item" : "Add New Work Item"}
-            </h2>
+            {/* Add/Edit Form */}
+            {showForm && (
+              <div className="mb-8 p-6 bg-gray-800 rounded-lg shadow-lg border border-gray-700">
+                <h2 className="text-xl font-semibold mb-4 text-white">
+                  {editing ? "Edit Work Item" : "Add New Work Item"}
+                </h2>
 
-            <form onSubmit={handleSubmit} className="space-y-4">
-              <div className="grid grid-cols-1 md:grid-cols-2 gap-4">
-                <div>
-                  <label className="block text-sm font-medium text-gray-700 mb-1">
-                    Slug
-                  </label>
-                  <input
-                    type="text"
-                    name="slug"
-                    value={formData.slug}
-                    onChange={handleInputChange}
-                    required
-                    pattern="[a-z0-9-]+"
-                    title="Lowercase letters, numbers, and hyphens only"
-                    className="w-full px-3 py-2 border border-gray-300 rounded focus:outline-none focus:ring-blue-500 focus:border-blue-500"
-                  />
-                  <p className="text-xs text-gray-500 mt-1">
-                    Lowercase letters, numbers, and hyphens only
-                  </p>
-                </div>
+                <form onSubmit={handleSubmit} className="space-y-4">
+                  <div className="grid grid-cols-1 md:grid-cols-2 gap-4">
+                    <div>
+                      <label className="block text-sm font-medium text-gray-300 mb-1">
+                        Slug <span className="text-red-400">*</span>
+                      </label>
+                      <input
+                        type="text"
+                        name="slug"
+                        value={formData.slug}
+                        onChange={handleInputChange}
+                        className="w-full px-3 py-2 bg-gray-700 border border-gray-600 rounded-md focus:outline-none focus:ring-blue-500 focus:border-blue-500 text-white"
+                        required
+                      />
+                      <p className="mt-1 text-xs text-gray-400">
+                        URL-friendly identifier (e.g., my-project)
+                      </p>
+                    </div>
+                    <div>
+                      <label className="block text-sm font-medium text-gray-300 mb-1">
+                        Title <span className="text-red-400">*</span>
+                      </label>
+                      <input
+                        type="text"
+                        name="title"
+                        value={formData.title}
+                        onChange={handleInputChange}
+                        className="w-full px-3 py-2 bg-gray-700 border border-gray-600 rounded-md focus:outline-none focus:ring-blue-500 focus:border-blue-500 text-white"
+                        required
+                      />
+                    </div>
+                    <div>
+                      <label className="block text-sm font-medium text-gray-300 mb-1">
+                        Image URL
+                      </label>
+                      <input
+                        type="text"
+                        name="image"
+                        value={formData.image}
+                        onChange={handleInputChange}
+                        className="w-full px-3 py-2 bg-gray-700 border border-gray-600 rounded-md focus:outline-none focus:ring-blue-500 focus:border-blue-500 text-white"
+                      />
+                    </div>
+                    <div>
+                      <label className="block text-sm font-medium text-gray-300 mb-1">
+                        Year
+                      </label>
+                      <input
+                        type="text"
+                        name="year"
+                        value={formData.year}
+                        onChange={handleInputChange}
+                        className="w-full px-3 py-2 bg-gray-700 border border-gray-600 rounded-md focus:outline-none focus:ring-blue-500 focus:border-blue-500 text-white"
+                      />
+                    </div>
+                    <div className="md:col-span-2">
+                      <label className="block text-sm font-medium text-gray-300 mb-1">
+                        Description
+                      </label>
+                      <textarea
+                        name="description"
+                        value={formData.description}
+                        onChange={handleInputChange}
+                        rows={3}
+                        className="w-full px-3 py-2 bg-gray-700 border border-gray-600 rounded-md focus:outline-none focus:ring-blue-500 focus:border-blue-500 text-white"
+                      />
+                    </div>
+                    <div className="md:col-span-2">
+                      <label className="block text-sm font-medium text-gray-300 mb-1">
+                        Notion Page ID
+                      </label>
+                      <input
+                        type="text"
+                        name="pageId"
+                        value={formData.pageId}
+                        onChange={handleInputChange}
+                        className="w-full px-3 py-2 bg-gray-700 border border-gray-600 rounded-md focus:outline-none focus:ring-blue-500 focus:border-blue-500 text-white"
+                      />
+                      <p className="mt-1 text-xs text-gray-400">
+                        Notion page ID for detailed content (optional)
+                      </p>
+                    </div>
+                  </div>
 
-                <div>
-                  <label className="block text-sm font-medium text-gray-700 mb-1">
-                    Page ID
-                  </label>
-                  <input
-                    type="text"
-                    name="pageId"
-                    value={formData.pageId}
-                    onChange={handleInputChange}
-                    required
-                    className="w-full px-3 py-2 border border-gray-300 rounded focus:outline-none focus:ring-blue-500 focus:border-blue-500"
-                  />
-                </div>
+                  <div className="flex justify-end">
+                    <button
+                      type="submit"
+                      className="px-4 py-2 bg-blue-600 text-white rounded hover:bg-blue-700 transition-colors"
+                    >
+                      {editing ? "Update Work" : "Add Work"}
+                    </button>
+                  </div>
+                </form>
+              </div>
+            )}
+
+            {/* Work Items List */}
+            <div className="bg-gray-800 shadow overflow-hidden rounded-lg border border-gray-700">
+              <div className="px-4 py-5 sm:px-6 border-b border-gray-700">
+                <h3 className="text-lg font-medium text-white">Work Items</h3>
+                <p className="mt-1 text-sm text-gray-400">
+                  Manage your portfolio works
+                </p>
               </div>
 
-              <div className="flex justify-end">
-                <button
-                  type="submit"
-                  className="px-4 py-2 bg-blue-600 text-white rounded hover:bg-blue-700 transition-colors"
-                >
-                  {editing ? "Update Work Item" : "Add Work Item"}
-                </button>
-              </div>
-            </form>
-          </div>
+              {isLoading ? (
+                <div className="text-center py-4 text-gray-400">Loading...</div>
+              ) : works.length === 0 ? (
+                <div className="text-center py-4 text-gray-400">
+                  No work items found
+                </div>
+              ) : (
+                <div className="overflow-x-auto">
+                  <table className="min-w-full divide-y divide-gray-700">
+                    <thead className="bg-gray-700">
+                      <tr>
+                        <th
+                          scope="col"
+                          className="px-6 py-3 text-left text-xs font-medium text-gray-300 uppercase tracking-wider"
+                        >
+                          Slug
+                        </th>
+                        <th
+                          scope="col"
+                          className="px-6 py-3 text-left text-xs font-medium text-gray-300 uppercase tracking-wider"
+                        >
+                          Title
+                        </th>
+                        <th
+                          scope="col"
+                          className="px-6 py-3 text-left text-xs font-medium text-gray-300 uppercase tracking-wider"
+                        >
+                          Year
+                        </th>
+                        <th
+                          scope="col"
+                          className="px-6 py-3 text-left text-xs font-medium text-gray-300 uppercase tracking-wider"
+                        >
+                          Updated
+                        </th>
+                        <th
+                          scope="col"
+                          className="px-6 py-3 text-right text-xs font-medium text-gray-300 uppercase tracking-wider"
+                        >
+                          Actions
+                        </th>
+                      </tr>
+                    </thead>
+                    <tbody className="bg-gray-800 divide-y divide-gray-700">
+                      {works.map((work) => (
+                        <tr key={work.slug} className="hover:bg-gray-750">
+                          <td className="px-6 py-4 whitespace-nowrap text-sm font-medium text-gray-100">
+                            {work.slug}
+                          </td>
+                          <td className="px-6 py-4 whitespace-nowrap text-sm text-gray-300">
+                            {work.title || "-"}
+                          </td>
+                          <td className="px-6 py-4 whitespace-nowrap text-sm text-gray-300">
+                            {work.year || "-"}
+                          </td>
+                          <td className="px-6 py-4 whitespace-nowrap text-sm text-gray-300">
+                            {work.updatedAt
+                              ? new Date(work.updatedAt).toLocaleDateString()
+                              : "-"}
+                          </td>
+                          <td className="px-6 py-4 whitespace-nowrap text-right text-sm font-medium">
+                            <div className="flex justify-end space-x-2">
+                              <button
+                                onClick={() => handleEdit(work)}
+                                className="text-blue-400 hover:text-blue-300"
+                              >
+                                Edit
+                              </button>
+                              <button
+                                onClick={() => handleDelete(work.slug)}
+                                className="text-red-400 hover:text-red-300"
+                              >
+                                Delete
+                              </button>
+                              {work.pageId && work.pageId !== "N/A" && (
+                                <button
+                                  onClick={() =>
+                                    handleRefreshNotion(work.pageId)
+                                  }
+                                  className="text-green-400 hover:text-green-300"
+                                >
+                                  Refresh Notion
+                                </button>
+                              )}
+                            </div>
+                          </td>
+                        </tr>
+                      ))}
+                    </tbody>
+                  </table>
+                </div>
+              )}
+            </div>
+          </>
         )}
 
-        {/* Work Items List */}
-        <div className="bg-white rounded-lg shadow overflow-hidden">
-          <h2 className="text-xl font-semibold p-6 border-b">Work Items</h2>
+        {/* Subscribers Tab Content */}
+        {activeTab === "subscribers" && (
+          <>
+            {/* Action Buttons */}
+            <div className="mb-6 flex flex-wrap gap-4">
+              <button
+                onClick={fetchSubscribers}
+                className="px-4 py-2 bg-gray-700 text-white rounded hover:bg-gray-600 transition-colors"
+              >
+                Refresh List
+              </button>
+            </div>
 
-          {isLoading ? (
-            <div className="p-6 text-center">Loading work items...</div>
-          ) : works.length === 0 ? (
-            <div className="p-6 text-center text-gray-500">
-              No work items found
-            </div>
-          ) : (
-            <div className="overflow-x-auto">
-              <table className="min-w-full divide-y divide-gray-200">
-                <thead className="bg-gray-50">
-                  <tr>
-                    <th className="px-6 py-3 text-left text-xs font-medium text-gray-500 uppercase tracking-wider">
-                      Slug
-                    </th>
-                    <th className="px-6 py-3 text-left text-xs font-medium text-gray-500 uppercase tracking-wider">
-                      Notion Page ID
-                    </th>
-                    <th className="px-6 py-3 text-left text-xs font-medium text-gray-500 uppercase tracking-wider">
-                      Actions
-                    </th>
-                  </tr>
-                </thead>
-                <tbody className="bg-white divide-y divide-gray-200">
-                  {works.map((work) => (
-                    <tr key={work.slug} className="hover:bg-gray-50">
-                      <td className="px-6 py-4 whitespace-nowrap">
-                        <div className="text-sm text-gray-500">{work.slug}</div>
-                      </td>
-                      <td className="px-6 py-4 whitespace-nowrap">
-                        <div className="text-sm text-gray-500">
-                          {work.pageId && work.pageId !== "N/A" ? (
-                            <span className="flex items-center">
-                              {work.pageId.substring(0, 10)}...
-                              <button
-                                onClick={() => handleRefreshNotion(work.pageId)}
-                                className="ml-2 p-1 text-blue-600 hover:text-blue-800"
-                                title="Refresh Notion data"
-                              >
-                                <svg
-                                  xmlns="http://www.w3.org/2000/svg"
-                                  className="h-4 w-4"
-                                  fill="none"
-                                  viewBox="0 0 24 24"
-                                  stroke="currentColor"
-                                >
-                                  <path
-                                    strokeLinecap="round"
-                                    strokeLinejoin="round"
-                                    strokeWidth={2}
-                                    d="M4 4v5h.582m15.356 2A8.001 8.001 0 004.582 9m0 0H9m11 11v-5h-.581m0 0a8.003 8.003 0 01-15.357-2m15.357 2H15"
-                                  />
-                                </svg>
-                              </button>
-                            </span>
-                          ) : (
-                            "N/A"
-                          )}
-                        </div>
-                      </td>
-                      <td className="px-6 py-4 whitespace-nowrap text-sm font-medium">
-                        <button
-                          onClick={() => handleEdit(work)}
-                          className="text-blue-600 hover:text-blue-900 mr-4"
+            {/* Subscribers List */}
+            <div className="bg-gray-800 shadow overflow-hidden rounded-lg border border-gray-700">
+              <div className="px-4 py-5 sm:px-6 border-b border-gray-700">
+                <h3 className="text-lg font-medium text-white">Subscribers</h3>
+                <p className="mt-1 text-sm text-gray-400">
+                  Manage your newsletter subscribers
+                </p>
+              </div>
+
+              {isLoading ? (
+                <div className="text-center py-4 text-gray-400">Loading...</div>
+              ) : subscribers.length === 0 ? (
+                <div className="text-center py-4 text-gray-400">
+                  No subscribers found
+                </div>
+              ) : (
+                <div className="overflow-x-auto">
+                  <table className="min-w-full divide-y divide-gray-700">
+                    <thead className="bg-gray-700">
+                      <tr>
+                        <th
+                          scope="col"
+                          className="px-6 py-3 text-left text-xs font-medium text-gray-300 uppercase tracking-wider"
                         >
-                          Edit
-                        </button>
-                        <button
-                          onClick={() => handleDelete(work.slug)}
-                          className="text-red-600 hover:text-red-900"
+                          Email
+                        </th>
+                        <th
+                          scope="col"
+                          className="px-6 py-3 text-left text-xs font-medium text-gray-300 uppercase tracking-wider"
                         >
-                          Delete
-                        </button>
-                      </td>
-                    </tr>
-                  ))}
-                </tbody>
-              </table>
+                          IP Address
+                        </th>
+                        <th
+                          scope="col"
+                          className="px-6 py-3 text-left text-xs font-medium text-gray-300 uppercase tracking-wider"
+                        >
+                          Date
+                        </th>
+                        <th
+                          scope="col"
+                          className="px-6 py-3 text-right text-xs font-medium text-gray-300 uppercase tracking-wider"
+                        >
+                          Actions
+                        </th>
+                      </tr>
+                    </thead>
+                    <tbody className="bg-gray-800 divide-y divide-gray-700">
+                      {subscribers.map((subscriber) => (
+                        <tr
+                          key={subscriber.email}
+                          className="hover:bg-gray-750"
+                        >
+                          <td className="px-6 py-4 whitespace-nowrap text-sm font-medium text-gray-100">
+                            {subscriber.email}
+                          </td>
+                          <td className="px-6 py-4 whitespace-nowrap text-sm text-gray-300">
+                            {subscriber.ipAddress || "-"}
+                          </td>
+                          <td className="px-6 py-4 whitespace-nowrap text-sm text-gray-300">
+                            {subscriber.timestamp
+                              ? new Date(
+                                  subscriber.timestamp
+                                ).toLocaleDateString()
+                              : "-"}
+                          </td>
+                          <td className="px-6 py-4 whitespace-nowrap text-right text-sm font-medium">
+                            <button
+                              onClick={() =>
+                                handleDeleteSubscriber(subscriber.email)
+                              }
+                              className="text-red-400 hover:text-red-300"
+                            >
+                              Delete
+                            </button>
+                          </td>
+                        </tr>
+                      ))}
+                    </tbody>
+                  </table>
+                </div>
+              )}
             </div>
-          )}
-        </div>
+          </>
+        )}
       </div>
     </div>
   );
