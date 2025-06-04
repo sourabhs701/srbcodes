@@ -24,19 +24,19 @@ export default function Header() {
   return (
     <>
       <nav className={`flex justify-between items-center mx-16 py-8 sticky top-0 z-50  transition-transform duration-300 ${show ? 'translate-y-0' : '-translate-y-full'}`}>
-        <div className='font-inter text-sm md:text-base flex items-center gap-2'>
+        <div className='font-inter font-light text-sm md:text-base flex items-center gap-2'>
           {/* if clicked switch to GripHorizontal and vice versa */}
           <Magnet padding={100} disabled={false} magnetStrength={10} onClick={() => setIsOpen(!isOpen)}
             className="text-black ">
 
 
-            {isOpen ? <GripHorizontal size={24} className='text-black hover:text-blue-600 transition-colors' /> : <GripVertical size={24} className='text-black hover:text-blue-600 transition-colors' />}
+            {isOpen ? <GripHorizontal size={24} className='text-white hover:text-blue-600 transition-colors' /> : <GripVertical size={24} className='text-white hover:text-blue-600 transition-colors' />}
 
           </Magnet>
 
           <Link href='/' className="hover:opacity-80 tracking-wider">SRB.CODES</Link>
         </div>
-        <div className='font-inter text-sm flex space-x-6 items-center tracking-wider '>
+        <div className='font-inter font-light text-sm flex space-x-6 items-center tracking-wider '>
           <Link href='/work' className='blue-dot hover:text-blue-600 transition-colors hover:underline font-medium'>WORK</Link>
           <Link href='/about' className='hover:text-blue-600 transition-colors font-medium hover:underline'>ABOUT</Link>
           <Link href='/#contact' className='hover:text-blue-600 transition-colors font-medium hover:underline'>CONTACT</Link>
@@ -52,11 +52,11 @@ export default function Header() {
         >
           {/* Close Button */}
           <div className="flex justify-start">
-            <Magnet padding={100} disabled={false} magnetStrength={10} onClick={() => setIsOpen(false)} className='text-black'>
-              <GripHorizontal size={24} className='text-white hover:text-blue-600 transition-colors' />
+            <Magnet padding={100} disabled={false} magnetStrength={10} onClick={() => setIsOpen(false)} >
+              <GripHorizontal size={24} className='text-white hover:text-blue-600 transition-colors ' />
             </Magnet>
 
-            <Link href='/' className="tracking-wider text-white font-inter pl-2">SRB.CODES</Link>
+            <Link href='/' className="tracking-wider text-white font-inter font-light pl-2">SRB.CODES</Link>
           </div>
 
 
