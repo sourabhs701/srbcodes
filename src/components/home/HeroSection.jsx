@@ -41,7 +41,7 @@ export function HeroSection() {
   return (
     <section className="p-4 md:p-5">
       <div className="mb-8 md:mb-10">
-        <h1 className="font-handwritten text-3xl md:text-4xl">
+        <h1 className="font-inter text-3xl md:text-4xl">
           AI Services <br />
           <span className="relative inline-block">
             <span className="absolute inset-0 bg-blue-400 rotate-[-2deg] z-0"></span>

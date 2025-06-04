@@ -27,7 +27,7 @@ export const metadata = {
 export default function RootLayout({ children }) {
   return (
     <html lang="en" className="scroll-smooth">
-      <body className="bg-[#fefeff] ">
+      <body className="bg-[#000] text-white ">
         <ClickSpark
           sparkColor="#000"
           sparkSize={10}
@@ -36,7 +36,7 @@ export default function RootLayout({ children }) {
           duration={400}
         >
           <main className="flex-grow">{children}</main>
-          <Toaster position="top-center" />
+          <Toaster position="bottom-center" />
         </ClickSpark>
       </body>
     </html>

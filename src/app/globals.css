@@ -1,5 +1,4 @@
-@import url('https://fonts.googleapis.com/css2?family=Indie+Flower&family=Permanent+Marker&display=swap');
-@import url('https://fonts.googleapis.com/css2?family=Inter:opsz,wght@14..32,100&display=swap');
+@import url('https://fonts.googleapis.com/css2?family=Inter:ital,opsz,wght@0,14..32,100..900;1,14..32,100..900&display=swap');
 @import url('https://fonts.googleapis.com/css2?family=DM+Serif+Text:ital@1&display=swap');
 @import "tailwindcss";
 @import "tw-animate-css";
@@ -10,42 +9,40 @@
 /* Add syntax highlighting via Prism */
 @import 'prismjs/themes/prism-tomorrow.css';
 
+/* Custom cursor styles */
+/* * {
+  cursor: none !important;
+} */
 
 
-.font-handwritten {
-    font-family: "Indie Flower", cursive;
-    font-weight: 200
-  }
-  
-  .font-inter {
-    font-family: "Inter", sans-serif;
-    font-optical-sizing: auto;
-    font-style: normal;
-  }
-  .font-serif {
+.font-inter {
+  font-family: "Inter", sans-serif;
+  font-optical-sizing: auto;
+  font-style: normal;
+}
+.font-serif {
   font-family: "DM Serif Text", serif;
   font-weight: 400;
   font-style: italic;
 }
-  
-  p {
-    font-family: "Inter", sans-serif;
-    font-size:medium;
-    font-weight: 100;
-    font-style: normal;
 
-  }
+p {
+  font-family: "Inter", sans-serif;
+  font-size:medium;
+  font-weight: 100;
+  font-style: normal;
+}
 
 .blue-dot::before {
-    content: '';
-    display: inline-block;
-    width: 6px;
-    height: 6px;
-    background-color: #3B82F6; /* Tailwind blue-500 */
-    border-radius: 9999px;
-    margin-right: 0.5rem;
-    vertical-align: middle;
-  }
+  content: '';
+  display: inline-block;
+  width: 6px;
+  height: 6px;
+  background-color: #3B82F6; /* Tailwind blue-500 */
+  border-radius: 9999px;
+  margin-right: 0.5rem;
+  vertical-align: middle;
+}
 
 /* Custom styling for Notion content */
 .notion-container {

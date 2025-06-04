@@ -5,7 +5,7 @@ export function SocialSection() {
     <section className="py-12 md:py-16">
       <div className="container mx-auto px-4 max-w-7xl">
         <div className="mb-8 md:mb-12 text-center">
-          <h2 className="text-3xl md:text-4xl font-bold text-gray-800 mb-2 font-handwritten">
+          <h2 className="text-3xl md:text-4xl font-bold text-gray-800 mb-2 font-inter">
             Check my{" "}
             <a
               href="https://x.com/sourabhdotsol"

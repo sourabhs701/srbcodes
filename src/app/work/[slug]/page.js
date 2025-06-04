@@ -29,7 +29,7 @@ export default async function WorkDetails({ params }) {
       <div className="min-h-screen bg-white text-black">
         <div className="max-w-4xl mx-auto px-6 py-12 md:px-8 lg:px-12">
           <div className="text-center mb-10">
-            {/* <h1 className="text-4xl md:text-5xl lg:text-6xl font-bold font-handwritten mb-6 text-black">
+            {/* <h1 className="text-4xl md:text-5xl lg:text-6xl font-bold font-inter mb-6 text-black">
               {work.name || work.slug}
             </h1> */}
           </div>
@@ -78,7 +78,7 @@ export default async function WorkDetails({ params }) {
           </Link>
 
           <div className="text-center">
-            <h1 className="text-4xl md:text-5xl font-bold font-handwritten mb-6 text-black">
+            <h1 className="text-4xl md:text-5xl font-bold font-inter mb-6 text-black">
               Error
             </h1>
             <p className="text-red-600 text-lg">
