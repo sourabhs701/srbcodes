@@ -27,7 +27,7 @@ export default async function WorkDetails({ params }) {
 
     return (
       <div className="min-h-screen bg-black text-white">
-        <div className="max-w-4xl mx-auto px-6 py-12 md:px-8 lg:px-12">
+        <div className="max-w-4xl mx-auto  ">
           <div className="text-center mb-10">
             {/* <h1 className="text-4xl md:text-5xl lg:text-6xl font-bold font-inter mb-6 text-black">
               {work.name || work.slug}
@@ -55,10 +55,10 @@ export default async function WorkDetails({ params }) {
   } catch (error) {
     return (
       <div className="min-h-screen bg-white text-black">
-        <div className="max-w-4xl mx-auto px-6 py-12 md:px-8 lg:px-12">
+        <div className="max-w-4xl mx-auto  py-12 ">
           <Link
             href="/work"
-            className="inline-flex items-center text-sm md:text-base font-medium bg-white/10 backdrop-blur-md rounded-full px-6 py-2 border border-black/20 hover:bg-white/20 transition-all mb-8"
+            className="inline-flex items-center text-sm md:text-base font-medium bg-white/10 backdrop-blur-md rounded-full  py-2 border border-black/20 hover:bg-white/20 transition-all mb-8"
           >
             <svg
               xmlns="http://www.w3.org/2000/svg"
