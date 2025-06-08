@@ -41,7 +41,7 @@ const Page = () => {
       {pageLoading && <Loader />}
       <CustomCursor isVisible={showCustomCursor} />
       <div className="h-[200px] bg-black"></div>
-      <div className="mx-16 mb-16">
+      <div className="mx-2 md:mx-16 mb-16">
         {/* <h1 className="text-4xl font-light py-6">Projects</h1> */}
 
         {loading ? (

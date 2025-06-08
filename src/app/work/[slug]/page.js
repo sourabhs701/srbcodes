@@ -2,6 +2,7 @@ import Link from "next/link";
 import { NotionPage } from "@/src/components/NotionPage";
 import { getWorkBySlugFromKV } from "@/src/lib/kv";
 import { getNotionPageData } from "@/src/lib/notion";
+import Footer from "@/src/components/layout/Footer";
 
 export default async function WorkDetails({ params }) {
   const { slug } = await params;
@@ -50,6 +51,7 @@ export default async function WorkDetails({ params }) {
             </div>
           )}
         </div>
+        <Footer />
       </div>
     );
   } catch (error) {
