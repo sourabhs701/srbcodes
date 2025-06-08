@@ -45,9 +45,7 @@ const Page = () => {
         {/* <h1 className="text-4xl font-light py-6">Projects</h1> */}
 
         {loading ? (
-          <div className="py-8 text-center">
-            <p className="text-lg text-gray-500">Loading projects...</p>
-          </div>
+          <Loader />
         ) : error ? (
           <div className="py-8 text-center">
             <p className="text-lg text-red-500">Error: {error}</p>

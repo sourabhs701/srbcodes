@@ -33,7 +33,7 @@ export default function Header() {
             }
           </Magnet>
 
-          <Link href='/' className="hover:opacity-80 tracking-wider">SRB.CODES</Link>
+          <Link href='/' className="hover:opacity-80 tracking-wider">srb.codes</Link>
         </div>
         <div className=' md:flex font-inter font-light text-xs space-x-6 items-center tracking-wider'>
           <Link href='/work' className='blue-dot hover:text-blue-600 transition-colors hover:underline font-medium'>WORK</Link>
@@ -48,7 +48,7 @@ export default function Header() {
             initial={{ opacity: 0 }}
             animate={{ opacity: 1 }}
             exit={{ opacity: 0 }}
-            className="fixed inset-0 bg-black text-white z-50 flex flex-col justify-between px-4 sm:px-6 md:px-8 lg:px-16 py-4 md:py-8 overflow-y-auto"
+            className="fixed inset-0 bg-black text-white z-50 flex flex-col justify-between px-8 sm:px-6 md:px-8 lg:px-16 py-4 md:py-8 overflow-y-auto"
           >
             {/* Close Button */}
             <div className="flex justify-start">
@@ -56,7 +56,7 @@ export default function Header() {
                 <GripHorizontal size={20} className='text-white text-xs sm:text-sm md:text-base hover:text-blue-600 transition-colors' />
               </Magnet>
 
-              <Link href='/' className="tracking-wider text-white font-inter font-light pl-2 text-xs sm:text-sm md:text-base">SRB.CODES</Link>
+              <Link href='/' className="tracking-wider text-white font-inter font-light pl-2 text-xs sm:text-sm md:text-base">srb.codes</Link>
             </div>
 
             <div className='flex flex-col lg:flex-row h-full justify-between gap-8 lg:gap-16 text-white py-8'>

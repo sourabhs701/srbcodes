@@ -8,17 +8,17 @@ export function ContactSection() {
 
             {/* Iridescence as background */}
             <Iridescence
-                color={[0.1, 0.3, 0.1]}
+                color={[0.6, 0.3, 0.6]}
                 mouseReact={false}
-                amplitude={0.1}
-                speed={1.0}
+                amplitude={0.2}
+                speed={1.2}
                 className="absolute inset-0 w-full h-full z-0"
             />
 
             {/* Noise overlay */}
             <div className="absolute inset-0 z-10">
                 <Noise
-                    patternSize={300}
+                    patternSize={350}
                     patternScaleX={1}
                     patternScaleY={1}
                     patternRefreshInterval={2}
