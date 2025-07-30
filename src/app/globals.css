@@ -25,6 +25,10 @@
   font-weight: 400;
   font-style: italic;
 }
+ .logo-ticker-image{
+        @apply h-8 w-auto;
+        
+    }
 
 p {
   font-family: "Inter", sans-serif;
