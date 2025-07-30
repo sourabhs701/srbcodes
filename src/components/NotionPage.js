@@ -26,7 +26,6 @@ const Modal = dynamic(
   }
 );
 
-// Function to extract page title from recordMap
 function getPageTitle(recordMap) {
   if (!recordMap.block) {
     return null;
@@ -48,7 +47,6 @@ export function NotionPage({ recordMap, rootPageId }) {
   }
 
   const title = getPageTitle(recordMap);
-  console.log(title);
 
   return (
     <NotionRenderer

@@ -6,7 +6,7 @@ export function SocialIcons({ className = '' }) {
   return (
     <div className={`flex space-x-3 ${className}`}>
       <Link
-        href="https://x.com/SRB_FUNDs"
+        href="https://x.com/srbcode"
         target="_blank"
         rel="noopener noreferrer"
         className="w-8 h-8 flex items-center justify-center rounded-md bg-muted text-foreground hover:bg-primary   transition-colors"

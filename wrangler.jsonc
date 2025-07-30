@@ -18,11 +18,10 @@
   ],
   "placement": { "mode": "smart" },
 
-  // KV namespace for all data storage and caching
   "kv_namespaces": [
     {
       "binding": "KV",
-      "id": "5b82ea59dac046c9a67de0116a5943dc"
+      "id": "692e6b6690624e3db1c4be6fe17115bd"
     }
   ]
 }

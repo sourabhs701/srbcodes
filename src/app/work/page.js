@@ -2,34 +2,15 @@
 import Footer from "@/src/components/layout/Footer";
 import Loader from "@/src/components/layout/Loader";
 import CustomCursor from "@/src/components/ui/CustomCursor";
+import { DATA } from "@/src/data/resume";
 import { motion, useMotionValue, useSpring, useTransform } from "framer-motion";
 import { useRouter } from "next/navigation";
-import { useRef, useState, useEffect } from "react";
+import { useRef, useState } from "react";
 
 const Page = () => {
   const [showCustomCursor, setShowCustomCursor] = useState(false);
-  const [workItems, setWorkItems] = useState([]);
-  const [loading, setLoading] = useState(true);
-  const [error, setError] = useState(null);
   const [pageLoading, setPageLoading] = useState(false);
   const router = useRouter();
-
-  useEffect(() => {
-    const fetchWorkItems = async () => {
-      try {
-        const res = await fetch("/api/work");
-        if (!res.ok) throw new Error("Failed to fetch work items");
-        const data = await res.json();
-        setWorkItems(data.data);
-      } catch (err) {
-        setError(err.message || "Unknown error");
-      } finally {
-        setLoading(false);
-      }
-    };
-
-    fetchWorkItems();
-  }, []);
 
   const handleNavigation = (href) => {
     setPageLoading(true);
@@ -42,24 +23,16 @@ const Page = () => {
       <CustomCursor isVisible={showCustomCursor} />
       <div className="h-[200px] bg-black"></div>
       <div className="mx-2 md:mx-16 mb-16">
-        {/* <h1 className="text-4xl font-light py-6">Projects</h1> */}
-
-        {loading ? (
-          <Loader />
-        ) : error ? (
-          <div className="py-8 text-center">
-            <p className="text-lg text-red-500">Error: {error}</p>
-          </div>
-        ) : workItems.length === 0 ? (
+        {DATA.projects.length === 0 ? (
           <div className="py-8 text-center">
             <p className="text-lg text-gray-500">No projects found</p>
           </div>
         ) : (
           <div className="flex flex-col">
-            {workItems.map((item) => (
+            {DATA.projects.map((item) => (
               <Link
                 key={item.slug}
-                heading={item.title || item.slug}
+                heading={item.title}
                 subheading={item.description || ""}
                 imgSrc={item.image || "https://via.placeholder.com/400x300"}
                 href={`/work/${item.slug}`}

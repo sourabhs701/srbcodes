@@ -255,15 +255,6 @@ const About = () => {
                 );
               })}
             </div>
-
-            <div className="text-center p-8 bg-gradient-to-r from-blue-900/20 to-purple-900/20 border border-blue-500/20 rounded-2xl">
-              <p className="text-lg text-gray-300 leading-relaxed">
-                &ldquo;Great software is born from the intersection of technical
-                precision and creative vision. I bring both to every project I
-                touch.&rdquo;
-              </p>
-              <p className="text-blue-400 font-medium mt-4">— Sourabh</p>
-            </div>
           </div>
         </section>
       </div>

@@ -6,9 +6,6 @@ Always update the `project-plan.md` with checkbox status or new tasks as you com
 
 ## Cloudflare Resource Usage:
 
-- **D1 (Database):**
-  - Always use the existing D1 binding specified in `wrangler.jsonc`. Do not suggest creating new D1 databases.
-  - The D1 database schema is managed by DrizzleORM. Schema definitions are in `src/db/schema.js`.
 - **KV (Key-Value Store):**
   - If KV is used (e.g., for caching API responses), always use an existing KV namespace specified in `wrangler.jsonc`.
 - **`wrangler.jsonc`:**

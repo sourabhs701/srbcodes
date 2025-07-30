@@ -37,7 +37,7 @@ export default function Header() {
         </div>
         <div className=' md:flex font-inter font-light text-xs space-x-6 items-center tracking-wider'>
           <Link href='/work' className='blue-dot hover:text-blue-600 transition-colors hover:underline font-medium'>WORK</Link>
-          <Link href='/about' className='hover:text-blue-600 transition-colors font-medium hover:underline'>ABOUT</Link>
+          <Link href='/blogs' className='hover:text-blue-600 transition-colors font-medium hover:underline'>BLOGS</Link>
           <Link href='/#contact' className='hover:text-blue-600 transition-colors font-medium hover:underline'>CONTACT</Link>
         </div>
       </nav>
@@ -63,7 +63,7 @@ export default function Header() {
               <div className='grid place-content-center gap-2 text-white'>
                 <FlipLink href="/" onClick={() => setIsOpen(false)}>Home</FlipLink>
                 <FlipLink href="/work" onClick={() => setIsOpen(false)}>Work</FlipLink>
-                <FlipLink href="/about" onClick={() => setIsOpen(false)}>About</FlipLink>
+                <FlipLink href="/blogs" onClick={() => setIsOpen(false)}>Blogs</FlipLink>
                 <FlipLink href="/#contact" onClick={() => setIsOpen(false)}>Contact</FlipLink>
               </div>
 
@@ -75,7 +75,7 @@ export default function Header() {
 
                 <div className='mt-6 lg:mt-8'>
                   <h1>Address</h1>
-                  <p className='font-light text-base sm:text-lg md:text-xl leading-none'>Originally from India To World.</p>
+                  <p className='font-light text-base sm:text-lg md:text-xl leading-none'>Originally from Jaipur To World.</p>
                 </div>
                 <div className='mt-6 lg:mt-8'>
                   <h1>Say hi 👋</h1>

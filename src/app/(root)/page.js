@@ -1,6 +1,6 @@
 import React from "react";
-import { HeroSection } from "@/src/components/home/HeroSection";
-import { ContactSection } from "@/src/components/home/ContactSection";
+import { HeroSection } from "@/src/sections/HeroSection";
+import { ContactSection } from "@/src/sections/ContactSection";
 import { LogoTicker } from "@/src/sections/LogoTicker";
 export default function HomePage() {
   return (
@@ -14,7 +14,7 @@ export default function HomePage() {
         <section className="container mx-auto px-6 pb-16 pt-8 md:pb-24 md:pt-8">
           <HeroSection />
         </section>
-        <LogoTicker />
+        {/* <LogoTicker /> */}
         {/* Contact Section */}
         <section className="border-t border-gray-800">
           <ContactSection />

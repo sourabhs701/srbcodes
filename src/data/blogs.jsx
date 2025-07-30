@@ -1,0 +1,50 @@
+export const DATA = {
+    blogs: [
+        {
+            slug: "getting-started-with-nextjs",
+            title: "Getting Started with Next.js",
+            excerpt: "A comprehensive guide to building modern web applications with Next.js",
+            publishedAt: "2024-12-15",
+            readTime: "5 min read",
+            category: "Web Development",
+            tags: ["Next.js", "React", "JavaScript", "Tutorial"],
+            notion_id: "your-notion-page-id-here",
+            featured: true,
+        },
+        {
+            slug: "cloudflare-workers-tutorial",
+            title: "Building Serverless APIs with Cloudflare Workers",
+            excerpt: "Learn how to create fast, scalable APIs using Cloudflare Workers and D1",
+            publishedAt: "2024-12-10",
+            readTime: "8 min read",
+            category: "Backend",
+            tags: ["Cloudflare Workers", "D1", "Serverless", "API"],
+            notion_id: "your-notion-page-id-here",
+            featured: false,
+        },
+        {
+            slug: "tailwind-css-best-practices",
+            title: "Tailwind CSS Best Practices for 2024",
+            excerpt: "Essential tips and tricks for writing maintainable Tailwind CSS code",
+            publishedAt: "2024-12-05",
+            readTime: "6 min read",
+            category: "Frontend",
+            tags: ["Tailwind CSS", "CSS", "Design", "Best Practices"],
+            notion_id: "your-notion-page-id-here",
+            featured: true,
+        },
+        {
+            slug: "notion-api-integration",
+            title: "Integrating Notion API with Next.js",
+            excerpt: "How to use Notion as a headless CMS for your Next.js applications",
+            publishedAt: "2024-11-30",
+            readTime: "7 min read",
+            category: "CMS",
+            tags: ["Notion", "API", "CMS", "Next.js"],
+            notion_id: "your-notion-page-id-here",
+            featured: false,
+        },
+    ],
+};
+
+

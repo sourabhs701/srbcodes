@@ -11,6 +11,10 @@ import Noise from "@/src/components/ui/Noise";
 export function HeroSection() {
     const [email, setEmail] = useState('');
     const [loading, setLoading] = useState(false);
+    const validateEmail = (email) => {
+        const emailRegex = /^[^\s@]+@[^\s@]+\.[^\s@]+$/;
+        return emailRegex.test(email);
+    };
 
     const skills = [
         { icon: Code, label: "Full-Stack Development" },
@@ -20,34 +24,52 @@ export function HeroSection() {
     ];
 
     const handleSubscribe = async () => {
-        if (!email || !/^[^\s@]+@[^\s@]+\.[^\s@]+$/.test(email)) {
-            toast.error('Please enter a valid email address');
+        if (!email.trim()) {
+            toast.error("Please enter your email address");
+            return;
+        }
+
+        if (!validateEmail(email)) {
+            toast.error("Please enter a valid email address");
             return;
         }
 
         setLoading(true);
 
         try {
-            const response = await fetch('/api/subscribe', {
-                method: 'POST',
-                headers: { 'Content-Type': 'application/json' },
-                body: JSON.stringify({ email }),
+            const response = await fetch("/api/subscribe", {
+                method: "POST",
+                headers: {
+                    "Content-Type": "application/json",
+                },
+                body: JSON.stringify({ email: email.trim() }),
             });
 
             const data = await response.json();
 
-            if (!response.ok) {
-                throw new Error(data.error || 'Subscription failed');
-            }
+            if (response.status === 200) {
+                // More robust checking with trimming and multiple conditions
+                const message = data.message?.trim();
 
-            toast.success('Thank you for subscribing!');
-            setEmail('');
-        } catch (err) {
-            toast.error(err.message || 'Failed to subscribe. Please try again.');
+                if (message === "You are already subscribed!" || message?.includes("already subscribed")) {
+                    toast.info("You are already subscribed!");
+                } else if (message === "Successfully subscribed!" || message?.includes("Successfully subscribed")) {
+                    toast.success("Thanks for subscribing! 🎉");
+                    setEmail("");
+                } else {
+                    toast.success(message || "Subscribed successfully!");
+                    setEmail("");
+                }
+            } else {
+                toast.error(data.error || "Something went wrong. Please try again.");
+            }
+        } catch (error) {
+            toast.error("Something went wrong. Please try again.");
         } finally {
             setLoading(false);
         }
     };
+
 
     return (
         <div className="max-w-6xl mx-auto">

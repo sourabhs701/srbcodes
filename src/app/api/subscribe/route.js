@@ -1,63 +1,63 @@
-import "server-only";
-import { saveSubscriberToKV } from "@/src/lib/kv";
+import { NextRequest, NextResponse } from "next/server";
+import { getCloudflareContext } from "@opennextjs/cloudflare";
 
-// Export the config for the API route
-export const config = {
-  runtime: "edge",
-};
-
-/**
- * POST /api/subscribe - Subscribe a user's email to the newsletter
- */
 export async function POST(request) {
   try {
-    // Get the request data
-    const requestData = await request.json();
-    const { email } = requestData;
+    const { env } = await getCloudflareContext({ async: true });
 
-    // Basic validation
-    if (!email || !/^\S+@\S+\.\S+$/.test(email)) {
-      return new Response(
-        JSON.stringify({
-          success: false,
-          error: "Valid email is required",
-        }),
-        {
-          status: 400,
-          headers: { "Content-Type": "application/json" },
-        }
+    const { email } = await request.json();
+
+    // Validate email
+    if (!email || typeof email !== "string") {
+      return NextResponse.json({ error: "Email is required" }, { status: 400 });
+    }
+
+    // Basic email validation
+    const emailRegex = /^[^\s@]+@[^\s@]+\.[^\s@]+$/;
+    if (!emailRegex.test(email.trim())) {
+      return NextResponse.json(
+        { error: "Invalid email format" },
+        { status: 400 }
       );
     }
 
-    // Get IP address from CF request
-    const forwardedFor = request.headers.get("x-forwarded-for");
-    const ipAddress = forwardedFor
-      ? forwardedFor.split(",")[0].trim()
-      : "unknown";
+    const kv = env.KV;
 
-    // Save subscriber to KV
-    await saveSubscriberToKV(email, ipAddress);
+    if (!kv) {
+      console.error("KV binding not found");
+      return NextResponse.json(
+        { error: "Server configuration error" },
+        { status: 500 }
+      );
+    }
 
-    return new Response(
-      JSON.stringify({
-        success: true,
-        message: "Subscription successful",
-      }),
-      {
-        headers: { "Content-Type": "application/json" },
-      }
+    const normalizedEmail = email.trim().toLowerCase();
+
+    // Check if email already exists
+    const existingSubscriber = await kv.get(normalizedEmail);
+
+    if (existingSubscriber) {
+      return NextResponse.json(
+        { message: "You are already subscribed!" },
+        { status: 200 }
+      );
+    }
+
+    const subscriberData = {
+      subscribedAt: new Date().toISOString(),
+    };
+
+    await kv.put(normalizedEmail, JSON.stringify(subscriberData));
+
+    return NextResponse.json(
+      { message: "Successfully subscribed!" },
+      { status: 200 }
     );
   } catch (error) {
-    console.error("Error in subscribe API:", error);
-    return new Response(
-      JSON.stringify({
-        success: false,
-        error: "Subscription failed. Please try again later.",
-      }),
-      {
-        status: 500,
-        headers: { "Content-Type": "application/json" },
-      }
+    console.error("Subscription error:", error);
+    return NextResponse.json(
+      { error: "Internal server error" },
+      { status: 500 }
     );
   }
 }
