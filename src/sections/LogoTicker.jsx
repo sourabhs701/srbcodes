@@ -1,11 +1,11 @@
 'use client'
 
-import quantumLogo from '@/src/assets/logo-quantum.png'
-import acmeLogo from '@/src/assets/logo-acme.png'
-import echoLogo from '@/src/assets/logo-echo.png'
-import celestialLogo from '@/src/assets/logo-celestial.png'
-import pulseLogo from '@/src/assets/logo-pulse.png'
-import apexLogo from '@/src/assets/logo-apex.png'
+import quantumLogo from '@/public/logo/logo-quantum.png'
+import acmeLogo from '@/public/logo/logo-acme.png'
+import echoLogo from '@/public/logo/logo-echo.png'
+import celestialLogo from '@/public/logo/logo-celestial.png'
+import pulseLogo from '@/public/logo/logo-pulse.png'
+import apexLogo from '@/public/logo/logo-apex.png'
 
 
 import Image from 'next/image'
