@@ -1,42 +1,48 @@
 import "./globals.css";
 import { Toaster } from "@/src/components/ui/sonner";
 import ClickSpark from "@/src/components/ui/ClickSpark";
+import { DATA } from "@/src/data/resume";
 
 export const metadata = {
-  title: "SRB CODES - HOME",
-  description:
-    "Premium AI-powered development services for businesses who demand excellence. From scalable backends to intelligent automation solutions. SRB CODES so you dont have to.",
-  keywords: [
-    "full-stack development",
-    "AI integration",
-    "backend architecture",
-    "DevOps",
-    "scalable systems",
-    "professional development",
-    "automation solutions",
-    "SRB.Codes",
-    "enterprise software",
-    "technical consulting",
-  ],
-  authors: [{ name: "SRB.Codes" }],
+  metadataBase: new URL(DATA.url),
+  title: {
+    default: DATA.name,
+    template: `%s | ${DATA.name}`,
+  },
+  description: DATA.description,
   openGraph: {
-    title: "SRB CODES - So You Don't Have To",
-    description:
-      "Premium AI-powered development services for businesses who demand excellence. From scalable backends to intelligent automation solutions.",
-    url: "https://www.srb.codes",
+    title: `${DATA.name}`,
+    description: DATA.description,
+    url: DATA.url,
+    siteName: `${DATA.name}`,
+    locale: "en_US",
     type: "website",
   },
+  robots: {
+    index: true,
+    follow: true,
+    googleBot: {
+      index: true,
+      follow: true,
+      "max-video-preview": -1,
+      "max-image-preview": "large",
+      "max-snippet": -1,
+    },
+  },
   twitter: {
+    title: `${DATA.name}`,
     card: "summary_large_image",
-    title: "SRB CODES - So You Don't Have To",
-    description:
-      "Premium AI-powered development services for businesses who demand excellence.",
+  },
+  verification: {
+    google: "",
+    yandex: "",
   },
 };
 
 export default function RootLayout({ children }) {
   return (
-    <html lang="en" className="scroll-smooth">
+    <html lang="en" suppressHydrationWarning className="scroll-smooth">
+      <link rel="icon" type="image/icon" sizes="32x32" href="/favicon.ico" />
       <body className="bg-[#000] text-white">
         <ClickSpark
           sparkColor="#3B82F6"
@@ -46,16 +52,7 @@ export default function RootLayout({ children }) {
           duration={300}
         >
           <main className="flex-grow">{children}</main>
-          <Toaster
-            position="bottom-center"
-            toastOptions={{
-              style: {
-                background: "#1F2937",
-                color: "#F9FAFB",
-                border: "1px solid #374151",
-              },
-            }}
-          />
+          <Toaster position="bottom-center" />
         </ClickSpark>
       </body>
     </html>
