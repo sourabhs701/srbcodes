@@ -144,7 +144,6 @@ export const DATA = {
                 "PostgreSQL",
                 "NotionX",
                 "Tailwind CSS",
-                "Cloudflare Workers",
             ],
             Badge: ["Personal"],
             Notion_id: "248d7bdb0e2e80c5b612d025c3448e2e",
@@ -169,7 +168,6 @@ export const DATA = {
                 "AWS S3",
                 "CloudFront",
                 "Docker",
-                "Cloudflare Tunnels"
             ],
             Badge: ["Personal"],
             Notion_id: "248d7bdb0e2e807cbcd8fd1c7ec3ecf3",
@@ -211,7 +209,6 @@ export const DATA = {
             description:
                 "Real-time public chat platform built on edge-first infrastructure.",
             technologies: [
-                "Cloudflare Workers",
                 "Durable Objects",
                 "WebSocket",
                 "SQLite",

@@ -28,17 +28,11 @@ const Page = () => {
             <p className="text-lg text-gray-500">No projects found</p>
           </div>
         ) : (
-          <div className="flex flex-col">
+          <div className="flex flex-col space-y-8">
             {DATA.projects.map((item) => (
               <Link
                 key={item.slug}
-                heading={item.title}
-                subheading={item.description || ""}
-                imgSrc={item.image || "https://via.placeholder.com/400x300"}
-                href={`/work/${item.slug}`}
-                technologies={item.technologies}
-                Badge={item.Badge}
-                dates={item.dates}
+                item={item}
                 setShowCustomCursor={setShowCustomCursor}
                 onClick={() => handleNavigation(`/work/${item.slug}`)}
               />
@@ -54,13 +48,7 @@ const Page = () => {
 };
 
 const Link = ({
-  heading,
-  imgSrc,
-  subheading,
-  href,
-  technologies,
-  Badge,
-  dates,
+  item,
   setShowCustomCursor,
   onClick,
 }) => {
@@ -98,7 +86,7 @@ const Link = ({
 
   return (
     <motion.a
-      href={href}
+      href={`/work/${item.slug}`}
       ref={ref}
       onClick={handleClick}
       onMouseMove={handleMouseMove}
@@ -128,9 +116,9 @@ const Link = ({
             staggerChildren: 0.075,
             delayChildren: 0.25,
           }}
-          className="relative z-10 block text-4xl font-bold text-neutral-500 transition-colors duration-500 group-hover:text-neutral-50 md:text-6xl"
+          className="relative z-10 block text-2xl font-bold text-neutral-500 transition-colors duration-300 group-hover:text-neutral-50 md:text-3xl"
         >
-          {heading.split("").map((l, i) => (
+          {item.title.split("").map((l, i) => (
             <motion.span
               variants={{
                 initial: { x: 0 },
@@ -145,27 +133,27 @@ const Link = ({
           ))}
         </motion.span>
 
-        <span className="relative z-10 mt-2 block text-base text-neutral-500 transition-colors duration-500 group-hover:text-neutral-50 mb-1">
-          {subheading}
+        <span className="relative z-10 mt-2 block text-base text-neutral-500 transition-colors duration-300 group-hover:text-neutral-50 mb-1">
+          {item.description}
         </span>
 
-        <div className="flex flex-wrap justify-left gap-4 mb-6 text-gray-400">
-          <span>{dates}</span>
+        <div className="flex items-center gap-4 text-sm text-neutral-600 group-hover:text-neutral-400">
+          <span>{item.dates}</span>
           <span>•</span>
-          {technologies.map((tech, index) => (
+          {item.technologies.map((tech, index) => (
             <span
               key={`tech-${index}`}
-              className="bg-gray-800 px-2 py-1 rounded-full text-sm "
+              className="bg-neutral-800 px-2 py-1 rounded text-xs "
             >
               {tech}
             </span>
           ))}
 
           <span>•</span>
-          {Badge.map((badge, index) => (
+          {item.Badge.map((badge, index) => (
             <span
               key={`badge-${index}`}
-              className="bg-gray-200 text-gray-800 px-3 py-1 rounded-full text-sm mr-2"
+              className="bg-neutral-600 text-neutral-800 group-hover:text-neutral-400 px-3 py-1 rounded text-xs mr-2"
             >
               {badge}
             </span>
@@ -185,9 +173,9 @@ const Link = ({
           whileHover: { scale: 1, rotate: "12.5deg" },
         }}
         transition={{ type: "spring" }}
-        src={imgSrc}
+        src={item.image}
         className="absolute z-0 h-24 w-32 rounded-lg object-cover md:h-48 md:w-64"
-        alt={`Image for ${heading}`}
+        alt={`Image for ${item.title}`}
       />
     </motion.a>
   );

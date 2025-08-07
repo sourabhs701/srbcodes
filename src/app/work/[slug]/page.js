@@ -30,7 +30,13 @@ export default async function WorkDetails({ params }) {
         <div className="max-w-4xl mx-auto">
           <div className="text-center mb-10">
             <h1 className="text-4xl md:text-5xl lg:text-6xl font-bold font-inter mb-6 text-white">
-              {work.title}
+              {work.title}{" "}
+              <a
+                href={work.links[0].href}
+                className="text-gray-400 text-lg hover:text-blue-500 block hover:underline"
+              >
+                {work.links[0].href}
+              </a>
             </h1>
             <p className="text-gray-400 text-lg mb-6">{work.description}</p>
 
