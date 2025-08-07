@@ -87,7 +87,7 @@ export const DATA = {
         //         "Next-gen crowdfunding platform on Solana blockchain with escrow-based smart contracts.",
         //     technologies: ["Next.js", "PostgreSQL", "Solana", "JavaScript", "Rust"],
         //     Badge: ["OSS", "Ongoing"],
-        //     Notion_id: "",
+        //     Notion_id: "227d7bdb0e2e809f9140d24645d0a452",
         //     links: [
         //         {
         //             type: "Website",
@@ -104,7 +104,7 @@ export const DATA = {
                 "Deploy react application in single click with custom domain",
             technologies: ["React", "SQLite", "JavaScript", "Docker", "S3", "Reverse proxy"],
             Badge: ["OSS"],
-            Notion_id: "227d7bdb0e2e809f9140d24645d0a452",
+            Notion_id: "248d7bdb0e2e803a85dbfc9f97fb60d4",
             links: [
                 {
                     type: "Website",
@@ -147,7 +147,7 @@ export const DATA = {
                 "Cloudflare Workers",
             ],
             Badge: ["Personal"],
-            Notion_id: "",
+            Notion_id: "248d7bdb0e2e80c5b612d025c3448e2e",
             links: [
                 {
                     type: "Website",
@@ -172,7 +172,7 @@ export const DATA = {
                 "Cloudflare Tunnels"
             ],
             Badge: ["Personal"],
-            Notion_id: "",
+            Notion_id: "248d7bdb0e2e807cbcd8fd1c7ec3ecf3",
             links: [
                 {
                     type: "Website",
@@ -218,7 +218,7 @@ export const DATA = {
                 "JavaScript",
             ],
             Badge: ["OSS"],
-            Notion_id: "",
+            Notion_id: "248d7bdb0e2e806584e4c88572d5f244",
             links: [
                 {
                     type: "Website",

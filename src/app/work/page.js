@@ -36,6 +36,9 @@ const Page = () => {
                 subheading={item.description || ""}
                 imgSrc={item.image || "https://via.placeholder.com/400x300"}
                 href={`/work/${item.slug}`}
+                technologies={item.technologies}
+                Badge={item.Badge}
+                dates={item.dates}
                 setShowCustomCursor={setShowCustomCursor}
                 onClick={() => handleNavigation(`/work/${item.slug}`)}
               />
@@ -55,6 +58,9 @@ const Link = ({
   imgSrc,
   subheading,
   href,
+  technologies,
+  Badge,
+  dates,
   setShowCustomCursor,
   onClick,
 }) => {
@@ -139,9 +145,32 @@ const Link = ({
           ))}
         </motion.span>
 
-        <span className="relative z-10 mt-2 block text-base text-neutral-500 transition-colors duration-500 group-hover:text-neutral-50">
+        <span className="relative z-10 mt-2 block text-base text-neutral-500 transition-colors duration-500 group-hover:text-neutral-50 mb-1">
           {subheading}
         </span>
+
+        <div className="flex flex-wrap justify-left gap-4 mb-6 text-gray-400">
+          <span>{dates}</span>
+          <span>•</span>
+          {technologies.map((tech, index) => (
+            <span
+              key={`tech-${index}`}
+              className="bg-gray-800 px-2 py-1 rounded-full text-sm "
+            >
+              {tech}
+            </span>
+          ))}
+
+          <span>•</span>
+          {Badge.map((badge, index) => (
+            <span
+              key={`badge-${index}`}
+              className="bg-gray-200 text-gray-800 px-3 py-1 rounded-full text-sm mr-2"
+            >
+              {badge}
+            </span>
+          ))}
+        </div>
       </div>
 
       <motion.img

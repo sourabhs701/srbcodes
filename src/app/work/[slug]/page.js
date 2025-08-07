@@ -9,6 +9,7 @@ export default async function WorkDetails({ params }) {
 
   try {
     const work = DATA.projects.find((project) => project.slug === slug);
+    console.log(work);
 
     if (!work) {
       throw new Error("Work item not found");
@@ -31,53 +32,30 @@ export default async function WorkDetails({ params }) {
             <h1 className="text-4xl md:text-5xl lg:text-6xl font-bold font-inter mb-6 text-white">
               {work.title}
             </h1>
-            {work.dates && (
-              <p className="text-lg text-gray-400 mb-4">{work.dates}</p>
-            )}
-            {work.description && (
-              <p className="text-xl text-gray-300 max-w-2xl mx-auto mb-6">
-                {work.description}
-              </p>
-            )}
-            {work.technologies && work.technologies.length > 0 && (
-              <div className="flex flex-wrap justify-center gap-2 mb-6">
-                {work.technologies.map((tech, index) => (
-                  <span
-                    key={index}
-                    className="px-3 py-1 bg-gray-800 text-gray-300 rounded-full text-sm"
-                  >
-                    {tech}
-                  </span>
-                ))}
-              </div>
-            )}
-            {work.Badge && work.Badge.length > 0 && (
-              <div className="flex flex-wrap justify-center gap-2 mb-6">
-                {work.Badge.map((badge, index) => (
-                  <span
-                    key={index}
-                    className="px-3 py-1 bg-blue-600 text-white rounded-full text-sm font-medium"
-                  >
-                    {badge}
-                  </span>
-                ))}
-              </div>
-            )}
-            {work.links && work.links.length > 0 && (
-              <div className="flex flex-wrap justify-center gap-4 mb-6">
-                {work.links.map((link, index) => (
-                  <a
-                    key={index}
-                    href={link.href}
-                    target="_blank"
-                    rel="noopener noreferrer"
-                    className="px-4 py-2 bg-white text-black rounded-lg hover:bg-gray-200 transition-colors"
-                  >
-                    {link.type}
-                  </a>
-                ))}
-              </div>
-            )}
+            <p className="text-gray-400 text-lg mb-6">{work.description}</p>
+
+            <div className="flex flex-wrap justify-center gap-4 mb-6 text-gray-400">
+              <span>{work.dates}</span>
+              <span>•</span>
+              {work.technologies.map((tech, index) => (
+                <span
+                  key={`tech-${index}`}
+                  className="bg-gray-800 px-2 py-1 rounded-full text-sm "
+                >
+                  {tech}
+                </span>
+              ))}
+
+              <span>•</span>
+              {work.Badge.map((badge, index) => (
+                <span
+                  key={`badge-${index}`}
+                  className="bg-gray-200 text-gray-800 px-3 py-1 rounded-full text-sm mr-2"
+                >
+                  {badge}
+                </span>
+              ))}
+            </div>
           </div>
 
           {/* {work.image && (
