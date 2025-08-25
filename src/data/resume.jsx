@@ -228,5 +228,3 @@ export const DATA = {
         }
     ],
 };
-
-export { DATA };
