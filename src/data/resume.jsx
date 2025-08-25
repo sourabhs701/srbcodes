@@ -90,7 +90,7 @@ export const DATA = {
                 "Reverse Proxy",
                 "CI/CD"
             ],
-            "Badge": ["Full Stack", "Product"],
+            "Category": ["Full Stack", "Product"],
             "Notion_id": "248d7bdb0e2e803a85dbfc9f97fb60d4",
             "links": [
                 {
@@ -113,7 +113,7 @@ export const DATA = {
                 "AWS ECS",
                 "HLS"
             ],
-            "Badge": ["Open Source", "DevOps"],
+            "Category": ["Open Source", "DevOps"],
             "Notion_id": "",
             "links": [],
             "image": "/hls-transcoder.png"
@@ -129,7 +129,7 @@ export const DATA = {
                 "Next.js",
                 "Framer Motion",
             ],
-            Badge: ["Frontend"],
+            Category: ["Frontend"],
             Notion_id: "",
             links: [
                 {
@@ -151,7 +151,7 @@ export const DATA = {
                 "NotionX",
                 "Tailwind CSS",
             ],
-            Badge: ["CMS", "Full Stack"],
+            Category: ["CMS", "Full Stack"],
             Notion_id: "248d7bdb0e2e80c5b612d025c3448e2e",
             links: [
                 {
@@ -174,7 +174,7 @@ export const DATA = {
                 "Docker",
                 "Cloudflare Tunnels",
             ],
-            "Badge": ["Open Source", "Product"],
+            "Category": ["Open Source", "Product", "Full Stack"],
             "Notion_id": "248d7bdb0e2e807cbcd8fd1c7ec3ecf3",
             "links": [
                 {
@@ -195,7 +195,7 @@ export const DATA = {
                 "Cloudflare KV",
                 "Gemini API"
             ],
-            "Badge": [, "AI", "Frontend"],
+            "Category": [, "AI", "Frontend"],
             "Notion_id": "",
             "links": [
                 {
@@ -216,7 +216,7 @@ export const DATA = {
                 "SQLite",
                 "JavaScript"
             ],
-            "Badge": ["Open Source", "DevOps"],
+            "Category": ["Open Source", "DevOps"],
             "Notion_id": "248d7bdb0e2e806584e4c88572d5f244",
             "links": [
                 {

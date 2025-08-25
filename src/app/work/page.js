@@ -2,14 +2,16 @@
 import Footer from "@/src/components/layout/Footer";
 import Loader from "@/src/components/layout/Loader";
 import CustomCursor from "@/src/components/ui/CustomCursor";
+import CategorySelector from "@/src/components/ui/CategorySelector";
 import { DATA } from "@/src/data/resume";
 import { motion, useMotionValue, useSpring, useTransform } from "framer-motion";
 import { useRouter } from "next/navigation";
-import { useRef, useState } from "react";
+import { useRef, useState, useMemo } from "react";
 
 const Page = () => {
   const [showCustomCursor, setShowCustomCursor] = useState(false);
   const [pageLoading, setPageLoading] = useState(false);
+  const [selectedCategory, setSelectedCategory] = useState("All");
   const router = useRouter();
 
   const handleNavigation = (href) => {
@@ -17,19 +19,50 @@ const Page = () => {
     router.push(href);
   };
 
+  // Get all unique categories from badges
+  const categories = useMemo(() => {
+    const allCategories = DATA.projects.flatMap(
+      (project) => project.Category || []
+    );
+    const uniqueCategories = [...new Set(allCategories)];
+    return ["All", ...uniqueCategories.sort()];
+  }, []);
+
+  // Filter projects based on selected category
+  const filteredProjects = useMemo(() => {
+    if (selectedCategory === "All") {
+      return DATA.projects;
+    }
+    return DATA.projects.filter(
+      (project) =>
+        project.Category && project.Category.includes(selectedCategory)
+    );
+  }, [selectedCategory]);
+
   return (
     <>
       {pageLoading && <Loader />}
       <CustomCursor isVisible={showCustomCursor} />
       <div className="h-[200px] bg-black"></div>
       <div className="mx-2 md:mx-16 mb-16">
-        {DATA.projects.length === 0 ? (
+        <CategorySelector
+          categories={categories}
+          selectedCategory={selectedCategory}
+          onCategoryChange={setSelectedCategory}
+          filteredCount={filteredProjects.length}
+          totalCount={DATA.projects.length}
+          label="projects"
+        />
+
+        {filteredProjects.length === 0 ? (
           <div className="py-8 text-center">
-            <p className="text-lg text-gray-500">No projects found</p>
+            <p className="text-lg text-gray-500">
+              No projects found in this category
+            </p>
           </div>
         ) : (
           <div className="flex flex-col space-y-8">
-            {DATA.projects.map((item) => (
+            {filteredProjects.map((item) => (
               <Link
                 key={item.slug}
                 item={item}
@@ -47,11 +80,7 @@ const Page = () => {
   );
 };
 
-const Link = ({
-  item,
-  setShowCustomCursor,
-  onClick,
-}) => {
+const Link = ({ item, setShowCustomCursor, onClick }) => {
   const ref = useRef(null);
 
   const x = useMotionValue(0);
@@ -150,12 +179,12 @@ const Link = ({
           ))}
 
           <span>•</span>
-          {item.Badge.map((badge, index) => (
+          {item.Category.map((category, index) => (
             <span
-              key={`badge-${index}`}
+              key={`category-${index}`}
               className="bg-neutral-600 text-neutral-800 group-hover:text-neutral-400 px-3 py-1 rounded text-xs mr-2"
             >
-              {badge}
+              {category}
             </span>
           ))}
         </div>
@@ -174,7 +203,7 @@ const Link = ({
         }}
         transition={{ type: "spring" }}
         src={item.image}
-        className="absolute z-0 h-24 w-32 rounded-lg object-cover md:h-48 md:w-64"
+        className="absolute z-50 h-24 w-32 rounded-lg object-cover md:h-48 md:w-64"
         alt={`Image for ${item.title}`}
       />
     </motion.a>

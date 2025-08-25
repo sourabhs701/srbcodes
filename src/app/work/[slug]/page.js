@@ -8,11 +8,23 @@ export default async function WorkDetails({ params }) {
   const { slug } = await params;
 
   try {
-    const work = DATA.projects.find((project) => project.slug === slug);
-    console.log(work);
+    // Validate that DATA.projects exists and is an array
+    if (!DATA.projects || !Array.isArray(DATA.projects)) {
+      throw new Error("Projects data is not properly loaded");
+    }
+
+    const work = DATA.projects.find(
+      (project) =>
+        project.slug &&
+        project.slug.toString().trim() === slug.toString().trim()
+    );
 
     if (!work) {
-      throw new Error("Work item not found");
+      throw new Error(
+        `Work item with slug "${slug}" not found. Available slugs: ${DATA.projects
+          .map((p) => p.slug)
+          .join(", ")}`
+      );
     }
 
     let recordMap = null;
@@ -31,12 +43,14 @@ export default async function WorkDetails({ params }) {
           <div className="text-center mb-10">
             <h1 className="text-4xl md:text-5xl lg:text-6xl font-bold font-inter mb-6 text-white">
               {work.title}{" "}
-              <a
-                href={work.links[0].href}
-                className="text-gray-400 text-lg hover:text-blue-500 block hover:underline"
-              >
-                {work.links[0].href}
-              </a>
+              {work.links && work.links.length > 0 && (
+                <a
+                  href={work.links[0].href}
+                  className="text-gray-400 text-lg hover:text-blue-500 block hover:underline"
+                >
+                  {work.links[0].href}
+                </a>
+              )}
             </h1>
             <p className="text-gray-400 text-lg mb-6">{work.description}</p>
 
@@ -53,12 +67,12 @@ export default async function WorkDetails({ params }) {
               ))}
 
               <span>•</span>
-              {work.Badge.map((badge, index) => (
+              {work.Category.map((category, index) => (
                 <span
-                  key={`badge-${index}`}
+                  key={`category-${index}`}
                   className="bg-gray-200 text-gray-800 px-3 py-1 rounded-full text-sm mr-2"
                 >
-                  {badge}
+                  {category}
                 </span>
               ))}
             </div>
@@ -101,7 +115,7 @@ export default async function WorkDetails({ params }) {
         <div className="max-w-4xl mx-auto py-12">
           <Link
             href="/work"
-            className="inline-flex items-center text-sm md:text-base font-medium bg-white/10 backdrop-blur-md rounded-full py-2 border border-black/20 hover:bg-white/20 transition-all mb-8"
+            className="inline-flex items-center text-sm md:text-base font-medium bg-white/10 backdrop-blur-md rounded-full p-2 border border-black/20 hover:bg-white/20 transition-all mb-8"
           >
             <svg
               xmlns="http://www.w3.org/2000/svg"
