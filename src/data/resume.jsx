@@ -79,40 +79,46 @@ export const DATA = {
         },
     ],
     projects: [
-        // {
-        //     slug: "crowd-funding-platform-powered-by-solana",
-        //     title: "Crowdfunding platform",
-        //     dates: "May 2025 – Present",
-        //     description:
-        //         "Next-gen crowdfunding platform on Solana blockchain with escrow-based smart contracts.",
-        //     technologies: ["Next.js", "PostgreSQL", "Solana", "JavaScript", "Rust"],
-        //     Badge: ["OSS", "Ongoing"],
-        //     Notion_id: "227d7bdb0e2e809f9140d24645d0a452",
-        //     links: [
-        //         {
-        //             type: "Website",
-        //             href: "https://makethumb.com",
-        //         },
-        //     ],
-        //     image: "/makethumb.png",
-        // },
         {
-            slug: "platform-as-a-service",
-            title: "Paas-makethumb",
-            dates: "May 2025 – Present",
-            description:
-                "Deploy react application in single click with custom domain",
-            technologies: ["React", "SQLite", "JavaScript", "Docker", "S3", "Reverse proxy"],
-            Badge: ["OSS"],
-            Notion_id: "248d7bdb0e2e803a85dbfc9f97fb60d4",
-            links: [
-                {
-                    type: "Website",
-                    href: "https://makethumb.com",
-                },
+            "slug": "platform-as-a-service",
+            "title": "MakeThumb — Vercel Clone",
+            "dates": "May 2025 – Present",
+            "description": "Developed a self-hosted Platform-as-a-Service (PaaS) that enables one-click deployment of React applications with custom domains. Implemented a Dockerized build-on-demand pipeline reducing deployment time from hours to minutes, automated asset delivery to AWS S3, and integrated a secure multi-tenant reverse proxy for scalable, isolated, and fast releases.",
+            "technologies": [
+                "Node.js",
+                "Docker",
+                "Reverse Proxy",
+                "CI/CD"
             ],
-            image: "/makethumb.png",
+            "Badge": ["Full Stack", "Product"],
+            "Notion_id": "248d7bdb0e2e803a85dbfc9f97fb60d4",
+            "links": [
+                {
+                    "type": "Website",
+                    "href": "https://makethumb.com"
+                }
+            ],
+            "image": "/makethumb.png"
         },
+
+        {
+            "slug": "hls-transcoder",
+            "title": "HLS Transcoder — Scalable Adaptive Video Streaming (OSS)",
+            "dates": "Feb 2025 – May 2025",
+            "description": "Built a distributed video transcoding system using FFmpeg within Dockerized environments to deliver adaptive bitrate HLS streaming (360p–1080p). Designed for scalability and seamless multi-device playback, the pipeline dynamically processes video streams and serves them via HTTP Live Streaming through AWS ECS.",
+            "technologies": [
+                "Node.js",
+                "FFmpeg",
+                "Docker",
+                "AWS ECS",
+                "HLS"
+            ],
+            "Badge": ["Open Source", "DevOps"],
+            "Notion_id": "",
+            "links": [],
+            "image": "/hls-transcoder.png"
+        },
+
         {
             slug: "bloom-animated-landing",
             title: "Bloom",
@@ -123,7 +129,7 @@ export const DATA = {
                 "Next.js",
                 "Framer Motion",
             ],
-            Badge: ["Personal"],
+            Badge: ["Frontend"],
             Notion_id: "",
             links: [
                 {
@@ -145,7 +151,7 @@ export const DATA = {
                 "NotionX",
                 "Tailwind CSS",
             ],
-            Badge: ["Personal"],
+            Badge: ["CMS", "Full Stack"],
             Notion_id: "248d7bdb0e2e80c5b612d025c3448e2e",
             links: [
                 {
@@ -156,75 +162,71 @@ export const DATA = {
             image: "/portfolio.png",
         },
         {
-            slug: "storage-as-a-service",
-            title: "Cloud-Storage",
-            dates: "Jan 2025 – Jun 2025",
-            description:
-                "Secure internal cloud storage system with efficient file uploads and virtual folders. Leverages AWS S3 and CloudFront for fast content delivery and robust file management.",
-            technologies: [
-                "Next.js",
-                "JavaScript",
+            "slug": "storage-as-a-service",
+            "title": "Google Drive Clone — Self-Hosted Cloud Storage (OSS)",
+            "dates": "Jan 2025 – Jun 2025",
+            "description": "Built a self-hosted, secure cloud storage platform with support for virtual folders, multipart uploads, and CDN-backed delivery. Implemented fuzzy search for efficient file discovery, integrated Cloudflare Tunnels for seamless self-hosting, and containerized the application using Docker. Designed for scalable, private, and enterprise-ready file management.",
+            "technologies": [
+                "Node.js",
                 "PostgreSQL",
                 "AWS S3",
-                "CloudFront",
+                "AWS CloudFront",
                 "Docker",
+                "Cloudflare Tunnels",
             ],
-            Badge: ["Personal"],
-            Notion_id: "248d7bdb0e2e807cbcd8fd1c7ec3ecf3",
-            links: [
+            "Badge": ["Open Source", "Product"],
+            "Notion_id": "248d7bdb0e2e807cbcd8fd1c7ec3ecf3",
+            "links": [
                 {
-                    type: "Website",
-                    href: "https://storage.srb.codes",
-                },
+                    "type": "Website",
+                    "href": "https://cloud.srb.codes"
+                }
             ],
-            image: "/storage.png",
+            "image": "/storage.png"
         },
         {
-            slug: "college-chatbot",
-            title: "AI-Chatbot",
-            dates: "Oct 2024 – May 2025",
-            description:
-                "AI-powered chatbot trained on college website content to instantly answer student queries.",
-            technologies: [
+            "slug": "college-chatbot",
+            "title": "AI Chatbot — College Query Assistant",
+            "dates": "Oct 2024 – May 2025",
+            "description": "Developed an AI-powered chatbot trained on college website content to provide instant, accurate responses to student queries. Leveraged Gemini API for natural language understanding, integrated with Cloudflare KV for efficient data retrieval, and deployed on a modern Next.js stack for seamless user experience.",
+            "technologies": [
                 "Next.js",
                 "JavaScript",
                 "Cloudflare KV",
                 "Gemini API"
-
             ],
-            Badge: ["Client"],
-            Notion_id: "",
-            links: [
+            "Badge": [, "AI", "Frontend"],
+            "Notion_id": "",
+            "links": [
                 {
-                    type: "Website",
-                    href: "https://poddarai.srb.codes",
-                },
+                    "type": "Website",
+                    "href": "https://poddarai.srb.codes"
+                }
             ],
-            image: "/chatbot.png",
+            "image": "/chatbot.png"
         },
         {
-            slug: "kairos-chat",
-            title: "public-chatrooms",
-            dates: "Mar 2025 – May 2025",
-            description:
-                "Real-time public chat platform built on edge-first infrastructure.",
-            technologies: [
-                "Durable Objects",
+            "slug": "kairos-chat",
+            "title": "Kairos Chat — Real-Time Public Chatrooms (OSS)",
+            "dates": "Mar 2025 – May 2025",
+            "description": "Designed and developed a real-time public chat platform leveraging edge-first infrastructure. Implemented WebSocket-based communication with Cloudflare Durable Objects for consistent state management, ensuring scalable, low-latency interactions. Optimized storage with SQLite for lightweight persistence and seamless user experience.",
+            "technologies": [
+                "Cloudflare Durable Objects",
                 "WebSocket",
                 "SQLite",
-                "JavaScript",
+                "JavaScript"
             ],
-            Badge: ["OSS"],
-            Notion_id: "248d7bdb0e2e806584e4c88572d5f244",
-            links: [
+            "Badge": ["Open Source", "DevOps"],
+            "Notion_id": "248d7bdb0e2e806584e4c88572d5f244",
+            "links": [
                 {
-                    type: "Website",
-                    href: "https://kairo.srb.codes",
-                },
+                    "type": "Website",
+                    "href": "https://kairo.srb.codes"
+                }
             ],
-            image: "/kairo.png",
-        },
-
-
+            "image": "/kairo.png"
+        }
     ],
-}
+};
+
+export { DATA };
