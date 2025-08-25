@@ -52,7 +52,7 @@ export function NotionPage({ recordMap, rootPageId }) {
     <NotionRenderer
       recordMap={recordMap}
       fullPage={true}
-      darkMode={false}
+      darkMode={true}
       rootPageId={rootPageId}
       components={{
         Code,
