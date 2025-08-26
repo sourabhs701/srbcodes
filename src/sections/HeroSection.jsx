@@ -52,47 +52,8 @@ export function HeroSection() {
                     </div>
                 </div>
 
-                {/* Skills Preview */}
-                <div className="max-w-4xl mx-auto">
-                    <h3 className="text-xl font-medium text-white mb-8">What I Do</h3>
-                    <div className="grid grid-cols-1 md:grid-cols-3 gap-6">
-                        <div className="p-6 border border-gray-800 rounded-lg hover:border-white/20 transition-all duration-300">
-                            <div className="text-center space-y-3">
-                                <div className="p-3 bg-white/5 rounded-lg w-fit mx-auto">
-                                    <span className="text-white text-2xl">⚡</span>
-                                </div>
-                                <div>
-                                    <h4 className="text-white font-medium text-lg mb-2">Web Development</h4>
-                                    <p className="text-gray-400 text-sm">Full-stack applications with React, Next.js, Node.js</p>
-                                </div>
-                            </div>
-                        </div>
-                        <div className="p-6 border border-gray-800 rounded-lg hover:border-white/20 transition-all duration-300">
-                            <div className="text-center space-y-3">
-                                <div className="p-3 bg-white/5 rounded-lg w-fit mx-auto">
-                                    <span className="text-white text-2xl">🔧</span>
-                                </div>
-                                <div>
-                                    <h4 className="text-white font-medium text-lg mb-2">Backend Systems</h4>
-                                    <p className="text-gray-400 text-sm">APIs, databases, and scalable architectures</p>
-                                </div>
-                            </div>
-                        </div>
-                        <div className="p-6 border border-gray-800 rounded-lg hover:border-white/20 transition-all duration-300">
-                            <div className="text-center space-y-3">
-                                <div className="p-3 bg-white/5 rounded-lg w-fit mx-auto">
-                                    <span className="text-white text-2xl">🚀</span>
-                                </div>
-                                <div>
-                                    <h4 className="text-white font-medium text-lg mb-2">DevOps</h4>
-                                    <p className="text-gray-400 text-sm">Deployment, CI/CD, and cloud infrastructure</p>
-                                </div>
-                            </div>
-                        </div>
-                    </div>
-                </div>
-            </div>
 
+            </div>
             {/* Newsletter Modal */}
             <NewsletterModal
                 isOpen={showNewsletter}
